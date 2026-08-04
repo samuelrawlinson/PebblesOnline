@@ -6,14 +6,15 @@ TagManager:
   tags:
   - Obstacle
   - Foe
+  - Boulder
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Ghosts
   - Water
   - UI
-  - 
+  - Boulders
   - 
   - 
   - 

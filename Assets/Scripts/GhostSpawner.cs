@@ -10,7 +10,7 @@ public class GhostSpawner : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        for(int numberOfGhosts = 0; numberOfGhosts < 5; numberOfGhosts++)
+        for(int numberOfGhosts = 0; numberOfGhosts < 10; numberOfGhosts++)
         {
             SpawnGhost();
         }
@@ -31,7 +31,6 @@ public class GhostSpawner : MonoBehaviour
         randomZ = Random.Range(-10f, 10f);
         randomPosition = new Vector3(randomX, 2f, randomZ);
         Instantiate(ghost, randomPosition, ghost.transform.rotation);
-        Debug.Log("should be a ghost");
     }
 }
 

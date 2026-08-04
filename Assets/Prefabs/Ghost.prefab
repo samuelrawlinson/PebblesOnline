@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8666959679592193335}
   - component: {fileID: 4761784765361607579}
   - component: {fileID: 2123229028882124657}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Chest
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -126,7 +126,7 @@ GameObject:
   - component: {fileID: 6949327517839852453}
   - component: {fileID: 2802616162707898875}
   - component: {fileID: 8370572685217805961}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: LeftArm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -240,7 +240,7 @@ GameObject:
   - component: {fileID: 1837988755024185022}
   - component: {fileID: 3269556695170723758}
   - component: {fileID: 6591130941697609612}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -353,8 +353,9 @@ GameObject:
   - component: {fileID: 227648073368871927}
   - component: {fileID: 1618371853934357523}
   - component: {fileID: 2987874882191058205}
-  - component: {fileID: 2414754395367733082}
-  m_Layer: 0
+  - component: {fileID: -8050966351192143588}
+  - component: {fileID: -124469571521252334}
+  m_Layer: 3
   m_Name: Ghost
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -487,7 +488,27 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 94
   m_CollisionDetection: 0
---- !u!114 &2414754395367733082
+--- !u!114 &-8050966351192143588
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5247298619941674407}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.AI.Navigation::Unity.AI.Navigation.NavMeshModifier
+  m_SerializedVersion: 0
+  m_OverrideArea: 0
+  m_Area: 0
+  m_OverrideGenerateLinks: 0
+  m_GenerateLinks: 0
+  m_IgnoreFromBuild: 1
+  m_ApplyToChildren: 1
+  m_AffectedAgents: ffffffff
+--- !u!114 &-124469571521252334
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -500,7 +521,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Rotate
   rotateSpeed: 3
-  target: {fileID: 8128338025913727274, guid: 74aad3ae2575553418e62509b1a3d171, type: 3}
 --- !u!1 &6635990462416407001
 GameObject:
   m_ObjectHideFlags: 0
@@ -513,7 +533,7 @@ GameObject:
   - component: {fileID: 1650917038167249993}
   - component: {fileID: 2681382231054757399}
   - component: {fileID: 7116934967001105832}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: RightArm
   m_TagString: Untagged
   m_Icon: {fileID: 0}

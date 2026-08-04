@@ -470,6 +470,7 @@ GameObject:
   - component: {fileID: 3770119190425179316}
   - component: {fileID: 5100332363836313360}
   - component: {fileID: 696536658865623076}
+  - component: {fileID: -8080761187784877371}
   m_Layer: 0
   m_Name: Foe
   m_TagString: Untagged
@@ -584,7 +585,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8128338025913727274}
   serializedVersion: 5
-  m_Mass: 1
+  m_Mass: 200
   m_LinearDamping: 0
   m_AngularDamping: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -636,6 +637,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::OpponentMovement
   target: {fileID: 0}
+  newBoulder: {fileID: 0}
+  maxThrowDistance: 5
+  hasThrown: 0
 --- !u!195 &696536658865623076
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -658,3 +662,25 @@ NavMeshAgent:
   m_BaseOffset: 1
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!95 &-8080761187784877371
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8128338025913727274}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 99c9da40df716d245bb8e77409797378, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

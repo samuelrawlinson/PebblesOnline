@@ -28,8 +28,12 @@ public class CameraController : MonoBehaviour
 
         Quaternion rotation = Quaternion.Euler(pitch, yaw, 0f);
         Vector3 offset = rotation * new Vector3(0f, distance, -distance);
-        transform.position = target.position + offset;
-        transform.LookAt(target);
+        if(target != null)
+        {
+            transform.position = target.position + offset;
+            transform.LookAt(target);
+        }
+        
 
     }
 }
