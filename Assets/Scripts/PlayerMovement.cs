@@ -3,16 +3,23 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     // Declaration of Variables
+    [Header("Movement")]
     [SerializeField] private float moveSpeed = 10f;
-    [SerializeField] private Transform cameraTransform;
-    private Rigidbody rb;
     private float horizontalInput;
     private float verticalInput;
+
+    [Header("References")]
+    [SerializeField] private Transform cameraTransform;
+    private Rigidbody rb;
 
 
     void Awake()
     {
         rb = GetComponent<Rigidbody>();
+    }
+
+    void Start()
+    {
     }
 
     // Update is called once per frame

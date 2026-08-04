@@ -4,13 +4,18 @@ using UnityEngine.AI;
 public class FoeMovement : MonoBehaviour
 {
     // Declaration of Variables
-    private NavMeshAgent agent;
-    [SerializeField] private Transform target;
+    [Header("Boulder")]
     [SerializeField] private GameObject newBoulder;
     [SerializeField] private float maxThrowDistance = 3f;
-    private GameObject personalBoulder;
-    private Animator animator;
-    public bool isBoulderHolder = true;
+    [SerializeField] private GameObject personalBoulder;
+    [SerializeField] public bool IsBoulderHolder = false;
+
+    [Header("References")]
+    [SerializeField] private Transform target;
+    [SerializeField] private GameManager gameManager;
+    [SerializeField] private NavMeshAgent agent;
+    [SerializeField] private Animator animator;
+    
     
 
     void Awake()
@@ -25,7 +30,9 @@ public class FoeMovement : MonoBehaviour
 
     void Start()
     {
-        if(isBoulderHolder)
+        gameManager = GameManager.Instance;
+
+        if(IsBoulderHolder)
         {
             animator.SetBool("IsHoldingBoulder", true);
         }
@@ -34,10 +41,10 @@ public class FoeMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (target != null)
-        {
-            agent.SetDestination(target.transform.position);
-        }
+        // if (target != null)
+        // {
+        //     agent.SetDestination(target.transform.position);
+        // }
     }
 
     void FixedUpdate()
@@ -55,7 +62,7 @@ public class FoeMovement : MonoBehaviour
     /// </summary>
     void ThrowBoulder()
     {
-        isBoulderHolder = false;
+        IsBoulderHolder = false;
         animator.SetBool("IsHoldingBoulder", false);
         personalBoulder.GetComponent<Boulder>().BeThrownByHolder(target.position);
     }

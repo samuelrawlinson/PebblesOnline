@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class Boulder : MonoBehaviour
 {
-    public GameObject boulderHolder;
     public Rigidbody rb;
+    public GameObject boulderHolder;
     private Vector3 boulderOffset = new Vector3(0f,3.25f,0f);
     [SerializeField] private float throwingForce = 10f;
+    [SerializeField] private float lifeTime = 0.5f;
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -19,7 +20,7 @@ public class Boulder : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(boulderHolder.GetComponent<FoeMovement>().isBoulderHolder)
+        if(boulderHolder.GetComponent<FoeMovement>().IsBoulderHolder)
         {
             transform.position = boulderHolder.transform.position + boulderOffset;
         }
@@ -33,7 +34,7 @@ public class Boulder : MonoBehaviour
     {
         Vector3 throwingDirection = (targetPosition - transform.position).normalized;
         rb.AddForce(throwingDirection * throwingForce, ForceMode.Impulse);
-        StartCoroutine("DestroyIfMissed", 0.5f);
+        StartCoroutine("DestroyIfMissed", lifeTime);
     }
 
     void OnCollisionEnter(Collision collision)
