@@ -5,6 +5,9 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance {get; private set;}
     public static float gamesWon = 0;
+    public bool IsPaused = false;
+
+    [Header("Managers")]
     [SerializeField] private GhostSpawner ghostSpawner;
     [SerializeField] private AudioManager audioManager;
     [SerializeField] private PlayerHealth playerHealth;
@@ -60,5 +63,17 @@ public class GameManager : MonoBehaviour
     public void PlayerLose()
     {
         return;
+    }
+
+    public void Pause()
+    {
+        IsPaused = true;
+        Time.timeScale = 0f;
+    }
+
+    public void Unpause()
+    {
+        IsPaused = false;
+        Time.timeScale = 1f;
     }
 }

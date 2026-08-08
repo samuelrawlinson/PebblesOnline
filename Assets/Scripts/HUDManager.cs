@@ -1,3 +1,4 @@
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
@@ -5,7 +6,11 @@ using UnityEngine.UI;
 public class HUDManager : MonoBehaviour
 {
     [Header("Health")]
-    [SerializeField] public Image healthBar;
+    [SerializeField] private Image healthBar;
+
+    [Header("Rounds")]
+    [SerializeField] private TextMeshProUGUI rounds;
+    [SerializeField] private TextMeshProUGUI roundsWon;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
