@@ -3,14 +3,12 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
-public class Player : MonoBehaviour
+public class PlayerActions : MonoBehaviour
 {
+    [Header("References")]
     private GameManager gameManager;
-
-    void Awake()
-    {
-        
-    }
+    public GameManager.GameMode currentMode = GameManager.GameMode.Playing;
+    
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()

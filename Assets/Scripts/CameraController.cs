@@ -4,6 +4,7 @@ public class CameraController : MonoBehaviour
 {
     // Declaration of Variables
     [SerializeField] private Transform target;
+    [SerializeField] private GameManager gameManager;
     [SerializeField] private float distance = 3f;
     [SerializeField] private float sensitivity = 5f;
     [SerializeField] private float maxPitch = 10f;
@@ -16,24 +17,25 @@ public class CameraController : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        gameManager = GameManager.Instance;
     }
 
     // Update is called once per frame
     void LateUpdate()
     {
-        yaw += Input.GetAxis("Mouse X") * sensitivity;
-        pitch -= Input.GetAxis("Mouse Y") * sensitivity;
-        pitch = Mathf.Clamp(pitch, minPitch, maxPitch);
-
-        Quaternion rotation = Quaternion.Euler(pitch, yaw, 0f);
-        Vector3 offset = rotation * new Vector3(0f, distance, -distance);
-        if(target != null)
+        if(gameManager.IsPaused == false)
         {
-            transform.position = target.position + offset;
-            transform.LookAt(target);
-        }
-        
+            yaw += Input.GetAxis("Mouse X") * sensitivity;
+            pitch -= Input.GetAxis("Mouse Y") * sensitivity;
+            pitch = Mathf.Clamp(pitch, minPitch, maxPitch);
 
+            Quaternion rotation = Quaternion.Euler(pitch, yaw, 0f);
+            Vector3 offset = rotation * new Vector3(0f, distance, -distance);
+            if(target != null)
+            {
+                transform.position = target.position + offset;
+                transform.LookAt(target);
+            }
+        }
     }
 }

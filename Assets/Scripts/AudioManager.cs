@@ -28,12 +28,13 @@ public class AudioManager : MonoBehaviour
         }
         Instance = this;
         DontDestroyOnLoad(gameObject);
-        MusicSource.volume = 0.5f;
+        
     }
 
     void Start()
     {
         UpdateMusic(false);
+        MusicSource.volume = 0.5f;
     }
 
 

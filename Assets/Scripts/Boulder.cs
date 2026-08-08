@@ -20,7 +20,7 @@ public class Boulder : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(boulderHolder.GetComponent<FoeMovement>().IsBoulderHolder)
+        if(boulderHolder.GetComponent<FoeActions>().IsBoulderHolder)
         {
             transform.position = boulderHolder.transform.position + boulderOffset;
         }

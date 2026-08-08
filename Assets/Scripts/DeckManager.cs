@@ -1,14 +1,16 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class DeckManager : MonoBehaviour
 {
     [SerializeField] private GameObject[] cardTypes;
     [SerializeField] private List<GameObject> deck = new List<GameObject>();
-    [SerializeField] private int numberOfBoulderCards = 3;
-    [SerializeField] private int numberOfOtherCards = 10;
+    [SerializeField] private int numberOfBoulderCards = 7;
+    [SerializeField] private int numberOfPebbleCards = 3;
+    [SerializeField] private int numberOfNormalCards = 18;
     [SerializeField] private int cardsDealtEachRound = 3;
-    [SerializeField] private Vector3[] cardSlots = {new Vector3(-1, 1.05f, 0), new Vector3(0, 1.05f, 0), new Vector3(1, 1.05f, 0)};
+    [SerializeField] private Vector3[] cardSlots;
     private GameManager gameManager;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -21,15 +23,10 @@ public class DeckManager : MonoBehaviour
 
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     void CreateDeck()
     {
-        for(int cardsInDeck = 0; cardsInDeck < numberOfOtherCards; cardsInDeck++)
+        for(int cardsInDeck = 0; cardsInDeck < numberOfNormalCards; cardsInDeck++)
         {
             deck.Add(cardTypes[0]);
             deck.Add(cardTypes[1]);
@@ -37,6 +34,10 @@ public class DeckManager : MonoBehaviour
         for(int bouldersInDeck = 0; bouldersInDeck < numberOfBoulderCards; bouldersInDeck++)
         {
             deck.Add(cardTypes[2]);
+        }
+        for(int pebblesInDeck = 0; pebblesInDeck < numberOfPebbleCards; pebblesInDeck++)
+        {
+            deck.Add(cardTypes[3]);
         }
     }
 
@@ -47,7 +48,7 @@ public class DeckManager : MonoBehaviour
     {
         for(int cardsDealt = 0; cardsDealt < cardsDealtEachRound; cardsDealt++)
         {
-            GameObject blankCard = Instantiate(cardTypes[3], cardSlots[cardsDealt], transform.rotation);
+            GameObject blankCard = Instantiate(cardTypes[4], cardSlots[cardsDealt], transform.rotation);
             deck.Add(blankCard);
         }
     }

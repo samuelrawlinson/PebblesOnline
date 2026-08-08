@@ -10,16 +10,11 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("References")]
     [SerializeField] private Transform cameraTransform;
-    private Rigidbody rb;
-
-
-    void Awake()
-    {
-        rb = GetComponent<Rigidbody>();
-    }
-
+    [SerializeField] private PlayerActions playerActions;
+   
     void Start()
     {
+        playerActions = GetComponent<PlayerActions>();
     }
 
     // Update is called once per frame
@@ -29,7 +24,11 @@ public class PlayerMovement : MonoBehaviour
         // Get movement axes and move the player accordingly
         horizontalInput = Input.GetAxis("Horizontal");
         verticalInput = Input.GetAxis("Vertical");
-        HandleMovement();
+
+        if(playerActions.currentMode == GameManager.GameMode.Dodging)
+        {
+            HandleMovement();
+        }
     }
 
     /// <summary>
@@ -43,6 +42,7 @@ public class PlayerMovement : MonoBehaviour
         Vector3 right = cameraTransform.right;
         right.y = 0f;
         right.Normalize();
+
         Vector3 movementDirection = (forward * verticalInput + right * horizontalInput).normalized;
         transform.Translate(movementDirection * moveSpeed * Time.deltaTime);
     }

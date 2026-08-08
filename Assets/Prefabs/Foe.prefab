@@ -468,9 +468,9 @@ GameObject:
   - component: {fileID: 992204648207246280}
   - component: {fileID: 7324254824733267071}
   - component: {fileID: 3770119190425179316}
-  - component: {fileID: 5100332363836313360}
   - component: {fileID: 696536658865623076}
   - component: {fileID: -8080761187784877371}
+  - component: {fileID: 2291453455893505157}
   m_Layer: 0
   m_Name: Foe
   m_TagString: Untagged
@@ -624,22 +624,6 @@ MonoBehaviour:
   m_IgnoreFromBuild: 1
   m_ApplyToChildren: 1
   m_AffectedAgents: ffffffff
---- !u!114 &5100332363836313360
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8128338025913727274}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f58d224142184b6468bc428a6d7066c8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::OpponentMovement
-  target: {fileID: 0}
-  newBoulder: {fileID: 0}
-  maxThrowDistance: 5
-  hasThrown: 0
 --- !u!195 &696536658865623076
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -684,3 +668,23 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &2291453455893505157
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8128338025913727274}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f58d224142184b6468bc428a6d7066c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FoeMovement
+  newBoulder: {fileID: 0}
+  maxThrowDistance: 3
+  personalBoulder: {fileID: 0}
+  IsBoulderHolder: 0
+  target: {fileID: 0}
+  gameManager: {fileID: 0}
+  agent: {fileID: 0}
+  animator: {fileID: 0}

@@ -5,7 +5,10 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance {get; private set;}
     public static float gamesWon = 0;
+
+    [Header("Public Variables")]
     public bool IsPaused = false;
+    public GameObject boulderPrefab;
 
     [Header("Managers")]
     [SerializeField] private GhostSpawner ghostSpawner;
@@ -13,6 +16,14 @@ public class GameManager : MonoBehaviour
     [SerializeField] private PlayerHealth playerHealth;
     [SerializeField] private DeckManager deckManager;
     public HUDManager HUDManager {get; private set;}
+
+    public enum GameMode
+    {
+        Playing,
+        Dodging,
+        Throwing,
+    }
+
 
     void Awake()
     {
