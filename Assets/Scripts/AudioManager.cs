@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class AudioManager : MonoBehaviour
 {
@@ -7,6 +8,7 @@ public class AudioManager : MonoBehaviour
     [Header("Music")]
     public AudioSource MusicSource;
     [SerializeField] private AudioClip menuMusic;
+    [SerializeField] private AudioClip gameMusic;
 
     [Header("SFX")]
     public AudioSource SFXSource;
@@ -31,17 +33,27 @@ public class AudioManager : MonoBehaviour
 
     void Start()
     {
-        if(MusicSource != null)
+        UpdateMusic(false);
+    }
+
+
+    /// <summary>
+    /// If the scene is the main menu, play the main menu music. If it's not, play the game music
+    /// </summary>
+    public void UpdateMusic(bool hasGameStarted)
+    {
+        if(MusicSource != null && hasGameStarted == false)
         {
             MusicSource.clip = menuMusic;
             MusicSource.loop = true;
             MusicSource.Play();
         }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        else if(MusicSource != null && hasGameStarted == true)
+        {
+            MusicSource.Stop();
+            MusicSource.clip = gameMusic;
+            MusicSource.loop = true;
+            MusicSource.Play();
+        }
     }
 }
