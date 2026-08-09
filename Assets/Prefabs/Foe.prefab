@@ -472,9 +472,10 @@ GameObject:
   - component: {fileID: -8080761187784877371}
   - component: {fileID: 2291453455893505157}
   - component: {fileID: 905247748146083807}
+  - component: {fileID: 1283589366699936544}
   m_Layer: 0
   m_Name: Foe
-  m_TagString: Untagged
+  m_TagString: Foe
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -686,15 +687,11 @@ MonoBehaviour:
   lowestCardIndex: 3
   highestCardIndex: 6
   selectionThinkTime: 3
-  maxThrowDistance: 3
-  personalBoulder: {fileID: 0}
-  IsBoulderHolder: 0
+  Animator: {fileID: 0}
   gameManager: {fileID: 0}
-  agent: {fileID: 0}
-  animator: {fileID: 0}
-  target: {fileID: 0}
+  foeBoulderBehavior: {fileID: 0}
   deck: {fileID: 0}
-  currentMode: 0
+  CurrentMode: 0
 --- !u!114 &905247748146083807
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -708,4 +705,29 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FoeHealth
   maxHealth: 3
-  currentHealth: 0
+  CurrentHealth: 0
+--- !u!114 &1283589366699936544
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8128338025913727274}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92fc4a55647e83649b14608c06fdf607, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FoeMiniGameBehavior
+  maxThrowDistance: 3
+  personalBoulder: {fileID: 0}
+  IsFoeBoulderHolder: 0
+  playingPosition: {x: 0, y: 0, z: 4}
+  agentSpeed: 10
+  minXValue: -7
+  maxXValue: 7
+  decisionTime: 1
+  randomDestination: {x: 0, y: 0, z: 6}
+  gameManager: {fileID: 0}
+  target: {fileID: 0}
+  foe: {fileID: 0}
+  agent: {fileID: 0}

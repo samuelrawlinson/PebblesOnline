@@ -3,9 +3,12 @@ using System.Collections.Generic;
 using JetBrains.Annotations;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class DeckManager : MonoBehaviour
 {
+    public List<Card> Cards = new List<Card>();
+
     [Header("Setup")]
     public bool CardsInPlay = false;
     public List<GameObject> BlankCards = new List<GameObject>();
@@ -15,7 +18,9 @@ public class DeckManager : MonoBehaviour
     [SerializeField] private Vector3[] cardSlots;
     [SerializeField] private float selectionHeightModifier = 2f;
     private List<Card> deck = new List<Card>();
-    private List<Card> cards = new List<Card>();
+
+    
+    
 
 
     public enum CardType
@@ -70,11 +75,11 @@ public class DeckManager : MonoBehaviour
         gameManager = GameManager.Instance;
         deckProp = GameObject.Find("Deck");
 
-        cards.Add(hillCard = new Card() {cardType = CardType.Hill, cardPrefab = cardPrefabs[0], damage = 1});
-        cards.Add(valleyCard = new Card() {cardType = CardType.Valley, cardPrefab = cardPrefabs[1], damage = -1});
-        cards.Add(boulderCard = new Card() {cardType = CardType.Boulder, cardPrefab = cardPrefabs[2], damage = -3});
-        cards.Add(pebbleCard = new Card() {cardType = CardType.Pebble, cardPrefab = cardPrefabs[3], damage = -3});
-        cards.Add(blankCard = new Card() {cardType = CardType.Blank, cardPrefab = cardPrefabs[4]});
+        Cards.Add(hillCard = new Card() {cardType = CardType.Hill, cardPrefab = cardPrefabs[0], damage = 1});
+        Cards.Add(valleyCard = new Card() {cardType = CardType.Valley, cardPrefab = cardPrefabs[1], damage = -1});
+        Cards.Add(boulderCard = new Card() {cardType = CardType.Boulder, cardPrefab = cardPrefabs[2], damage = -3});
+        Cards.Add(pebbleCard = new Card() {cardType = CardType.Pebble, cardPrefab = cardPrefabs[3], damage = -3});
+        Cards.Add(blankCard = new Card() {cardType = CardType.Blank, cardPrefab = cardPrefabs[4]});
 
         CreateDeck();
         DealCards();
@@ -88,16 +93,16 @@ public class DeckManager : MonoBehaviour
     {
         for(int cardsInDeck = 0; cardsInDeck < numberOfNormalCards; cardsInDeck++)
         {
-            deck.Add(cards[(int)CardType.Hill]);
-            deck.Add(cards[(int)CardType.Valley]);
+            deck.Add(Cards[(int)CardType.Hill]);
+            deck.Add(Cards[(int)CardType.Valley]);
         }
         for(int bouldersInDeck = 0; bouldersInDeck < numberOfBoulderCards; bouldersInDeck++)
         {
-            deck.Add(cards[(int)CardType.Boulder]);
+            deck.Add(Cards[(int)CardType.Boulder]);
         }
         for(int pebblesInDeck = 0; pebblesInDeck < numberOfPebbleCards; pebblesInDeck++)
         {
-            deck.Add(cards[(int)CardType.Pebble]);
+            deck.Add(Cards[(int)CardType.Pebble]);
         }
     }
 
@@ -180,6 +185,14 @@ public class DeckManager : MonoBehaviour
     }
 
 
+    public void RoundlyDamage()
+    {
+        Debug.Log("Damage from playing one card");
+        gameManager.UpdateHealth(true, minimumCardLossPerRound);
+        gameManager.UpdateHealth(false, minimumCardLossPerRound);
+    }
+
+
     /// <summary>
     /// After cardChangeTime has elapsed, destroy revealed cards, and manage the consequences of each card
     /// </summary>
@@ -188,10 +201,39 @@ public class DeckManager : MonoBehaviour
     {
         yield return new WaitForSeconds(cardChangeTime);
 
+      
+        // If it's a Boulder, the other player loses if you hit them
+
+        // Player played a Boulder
+        if(firstCard.cardType == CardType.Boulder)
+        {
+            Debug.Log("Player played a Boulder");
+
+            // Start the boulder throw minigame
+            gameManager.ManageGameModes(GameManager.GameMode.Throwing, GameManager.GameMode.Dodging);
+            gameManager.OnMiniGameStart?.Invoke();
+
+            // Update the foe's health with boulder's damage
+            // gameManager.UpdateHealth(false, cards[(int)CardType.Boulder].damage);
+        }
+
+        // Foe played a Boulder
+        if(secondCard.cardType == CardType.Boulder && gameManager.PlayerActions.CurrentMode != GameManager.GameMode.Throwing)
+        {
+            Debug.Log("Foe played a Boulder");
+            // Start the boulder throw minigame
+            gameManager.ManageGameModes(GameManager.GameMode.Dodging, GameManager.GameMode.Throwing);
+            gameManager.OnMiniGameStart?.Invoke();
+        }
+
+
         // Update both players health because they both played a card
-        Debug.Log("Damage from playing one card");
-        gameManager.UpdateHealth(true, minimumCardLossPerRound);
-        gameManager.UpdateHealth(false, minimumCardLossPerRound);
+        if(gameManager.PlayerActions.CurrentMode == GameManager.GameMode.Playing)
+        {
+            RoundlyDamage();
+        }
+
+
 
 
         // If it's a Hill, replace the card with a new one
@@ -201,10 +243,10 @@ public class DeckManager : MonoBehaviour
         {
             Debug.Log("Player played a Hill");
             // Update the player's health with hill's healing
-            gameManager.UpdateHealth(true, cards[(int)CardType.Hill].damage);
+            gameManager.UpdateHealth(true, Cards[(int)CardType.Hill].damage);
             
             // Create a new blank card where the revealed card used to be
-            BlankCards[firstIndex] = Instantiate(cards[(int)CardType.Blank].cardPrefab, cardSlots[firstIndex], transform.rotation);
+            BlankCards[firstIndex] = Instantiate(Cards[(int)CardType.Blank].cardPrefab, cardSlots[firstIndex], transform.rotation);
 
             // Move the deck object down one card thickness
             deckProp.transform.Translate(new Vector3(0, cardThickness * -(cardsDealtEachRound / cardsDealtEachRound), 0));
@@ -214,10 +256,10 @@ public class DeckManager : MonoBehaviour
         {
             Debug.Log("Foe played a Hill");
             // Update the foe's health with hill's healing
-            gameManager.UpdateHealth(false, cards[(int)CardType.Hill].damage);
+            gameManager.UpdateHealth(false, Cards[(int)CardType.Hill].damage);
 
             // Create a new blank card where the revealed card used to be
-            BlankCards[secondIndex] = Instantiate(cards[(int)CardType.Blank].cardPrefab, cardSlots[secondIndex], transform.rotation);
+            BlankCards[secondIndex] = Instantiate(Cards[(int)CardType.Blank].cardPrefab, cardSlots[secondIndex], transform.rotation);
 
             // Move the deck object down one card thickness
             deckProp.transform.Translate(new Vector3(0, cardThickness * -(cardsDealtEachRound / cardsDealtEachRound), 0));
@@ -228,11 +270,11 @@ public class DeckManager : MonoBehaviour
         // If it's a Valley, the other player discards a card
 
         // Player played a Valley
-        if(firstCard.cardType == CardType.Valley)
+        if(firstCard.cardType == CardType.Valley && gameManager.PlayerActions.CurrentMode == GameManager.GameMode.Playing)
         {
             Debug.Log("Player played a Valley");
             // Update the foe's health with valley's damage
-            gameManager.UpdateHealth(false, cards[(int)CardType.Valley].damage);
+            gameManager.UpdateHealth(false, Cards[(int)CardType.Valley].damage);
 
 
             // Delete the first card that hasn't been destroyed already
@@ -246,11 +288,11 @@ public class DeckManager : MonoBehaviour
             }
         }
         // Foe played a Valley
-        if(secondCard.cardType == CardType.Valley)
+        if(secondCard.cardType == CardType.Valley && gameManager.PlayerActions.CurrentMode == GameManager.GameMode.Playing)
         {
             Debug.Log("Foe played a Valley");
             // Update the player's health with valley's damage
-            gameManager.UpdateHealth(true, cards[(int)CardType.Valley].damage);
+            gameManager.UpdateHealth(true, Cards[(int)CardType.Valley].damage);
 
             // Delete the first card that hasn't been destroyed already
             for(int playerCards = playerMinIndex; playerCards < playerMaxIndex; playerCards++)
@@ -263,28 +305,6 @@ public class DeckManager : MonoBehaviour
             }
         } 
 
-        // If it's a Boulder, the other player loses if you hit them
-
-        // Player played a Boulder
-        if(firstCard.cardType == CardType.Boulder)
-        {
-            Debug.Log("Player played a Boulder");
-            // TODO add the boulder throw minigame
-
-            // Update the foe's health with boulder's damage
-            gameManager.UpdateHealth(false, cards[(int)CardType.Boulder].damage);
-        }
-
-        // Foe played a Boulder
-        if(secondCard.cardType == CardType.Boulder)
-        {
-            Debug.Log("Foe played a Boulder");
-            // TODO add the boulder throw minigame
-            
-            // Update the player's health with boulder's damage
-            gameManager.UpdateHealth(true, cards[(int)CardType.Boulder].damage);
-        }
-
 
 
         // Player played a Pebble
@@ -292,7 +312,7 @@ public class DeckManager : MonoBehaviour
         {
             Debug.Log("Player played a Pebble");
             // Update the foe's health with boulder's damage
-            gameManager.UpdateHealth(true, cards[(int)CardType.Pebble].damage);
+            gameManager.UpdateHealth(true, Cards[(int)CardType.Pebble].damage);
         }
 
         // Foe played a Pebble
@@ -300,7 +320,7 @@ public class DeckManager : MonoBehaviour
         {
             Debug.Log("Foe played a Pebble");            
             // Update the player's health with boulder's damage
-            gameManager.UpdateHealth(false, cards[(int)CardType.Pebble].damage);
+            gameManager.UpdateHealth(false, Cards[(int)CardType.Pebble].damage);
         }
 
 

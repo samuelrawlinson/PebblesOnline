@@ -7,7 +7,6 @@ public class PlayerMovement : MonoBehaviour
     [Header("Movement")]
     [SerializeField] private float moveSpeed = 10f;
     private float horizontalInput;
-    private float verticalInput;
 
     [Header("References")]
     [SerializeField] private Transform cameraTransform;
@@ -18,6 +17,7 @@ public class PlayerMovement : MonoBehaviour
         playerActions = GetComponent<PlayerActions>();
 
     }
+
 
 
     void Update()

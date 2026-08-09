@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.XR;
 
 public class FoeActions : MonoBehaviour
 {
@@ -12,49 +13,24 @@ public class FoeActions : MonoBehaviour
     [SerializeField] private int highestCardIndex = 6; // exclusive
     [SerializeField] private float selectionThinkTime = 3;
     
-    
-    [Header("Boulder")]
-    [SerializeField] private float maxThrowDistance = 3f;
-    [SerializeField] private GameObject personalBoulder;
-    [SerializeField] public bool IsBoulderHolder = false;
 
     [Header("References")]
+    public Animator Animator;
     [SerializeField] private GameManager gameManager;
-    [SerializeField] private NavMeshAgent agent;
-    [SerializeField] private Animator animator;
-    [SerializeField] private Transform target;
     [SerializeField] private DeckManager deck;
 
     [Header("AI")]
-    [SerializeField] GameManager.GameMode currentMode = GameManager.GameMode.Playing;
+    public GameManager.GameMode CurrentMode = GameManager.GameMode.Playing;
 
-
-    void Awake()
-    {
-        agent = GetComponent<NavMeshAgent>();
-        animator = GetComponent<Animator>();
-        agent.speed = 9f;
-        agent.stoppingDistance = 5f;
-        
-    }
 
     void Start()
     {
+        Animator = GetComponent<Animator>();
         gameManager = GameManager.Instance;
         deck = GameObject.Find("CardManager").GetComponent<DeckManager>();
         StartCoroutine("ChooseCard");
     }
 
-
-    void FixedUpdate()
-    {
-        // float distanceToPlayer = Vector3.Distance(transform.position, target.position);
-
-        // if(distanceToPlayer <= maxThrowDistance && personalBoulder != null)
-        // {
-        //     ThrowBoulder();
-        // }
-    }
 
     /// <summary>
     /// Select a card at random, and set HasCardSelected to true
@@ -64,7 +40,7 @@ public class FoeActions : MonoBehaviour
     {
         yield return new WaitForSeconds(selectionThinkTime);
 
-        while(HasCardSelected != true && gameManager.IsGameOver != true)
+        while(HasCardSelected != true && gameManager.IsGameOver != true && CurrentMode == GameManager.GameMode.Playing)
         { 
             CardIndexSelected = Random.Range(lowestCardIndex, highestCardIndex);
 
@@ -79,31 +55,5 @@ public class FoeActions : MonoBehaviour
                 break;
             }
         }
-    
-
-        
-    }
-
-    /// <summary>
-    /// If the foe is the Boulder Holder, instantiate a new boulder for them to throw
-    /// </summary>
-    private void GetNewBoulder()
-    {
-        if(IsBoulderHolder)
-        {
-            animator.SetBool("IsHoldingBoulder", true);
-            personalBoulder = Instantiate(gameManager.boulderPrefab, transform.position, transform.rotation);
-            personalBoulder.GetComponent<Boulder>().boulderHolder = gameObject;
-        }
-    }
-
-    /// <summary>
-    /// No longer the Boulder Holder, so change the animation and throw the boulder
-    /// </summary>
-    private void ThrowBoulder()
-    {
-        IsBoulderHolder = false;
-        animator.SetBool("IsHoldingBoulder", false);
-        personalBoulder.GetComponent<Boulder>().BeThrownByHolder(target.position);
     }
 }

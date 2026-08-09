@@ -1,6 +1,7 @@
 using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class GameManager : MonoBehaviour
 {
@@ -9,18 +10,24 @@ public class GameManager : MonoBehaviour
     public static int FoeWins = 0;
     public static int Round = 1;
 
-    [Header("Public Variables")]
+    [Header("Publics")]
     public bool IsPaused { get; private set; } = false;
     public bool IsGameOver { get; private set;} = false;
+    public UnityEvent OnMiniGameStart = new UnityEvent();
     public GameObject boulderPrefab;
 
     [Header("Managers")]
     [SerializeField] private GhostSpawner ghostSpawner;
     [SerializeField] private AudioManager audioManager;
-    [SerializeField] private PlayerHealth playerHealth;
-    [SerializeField] private FoeHealth foeHealth;
     [SerializeField] private DeckManager deckManager;
     [SerializeField] private HUDManager hudManager;
+
+    [Header("Players")]
+    [SerializeField] private PlayerHealth playerHealth;
+    [SerializeField] private FoeHealth foeHealth;
+    [SerializeField] private FoeActions foeActions;
+    public PlayerActions PlayerActions;
+
 
     public enum GameMode
     {
@@ -51,14 +58,6 @@ public class GameManager : MonoBehaviour
         {
             audioManager = FindAnyObjectByType<AudioManager>();
         }
-        if(playerHealth == null)
-        {
-            playerHealth = FindAnyObjectByType<PlayerHealth>();
-        }
-        if(foeHealth == null)
-        {
-            foeHealth = FindAnyObjectByType<FoeHealth>();
-        }
         if(deckManager == null)
         {
             deckManager = FindAnyObjectByType<DeckManager>();
@@ -67,6 +66,31 @@ public class GameManager : MonoBehaviour
         {
             hudManager = FindAnyObjectByType<HUDManager>();
         }
+        if(playerHealth == null)
+        {
+            playerHealth = FindAnyObjectByType<PlayerHealth>();
+        }
+        if(foeHealth == null)
+        {
+            foeHealth = FindAnyObjectByType<FoeHealth>();
+        }
+        if(PlayerActions == null)
+        {
+            PlayerActions = FindAnyObjectByType<PlayerActions>();
+        }
+        if(foeActions == null)
+        {
+            foeActions = FindAnyObjectByType<FoeActions>();
+        }
+    }
+
+    public void ManageGameModes(GameMode player, GameMode foe)
+    {
+        PlayerActions.CurrentMode = player;
+        foeActions.CurrentMode = foe;
+        Debug.Log(player);
+        Debug.Log(foe);
+
     }
 
     public void UpdateHealth(bool isPlayer, int amount)

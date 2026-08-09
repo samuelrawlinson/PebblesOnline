@@ -11,17 +11,20 @@ public class PlayerActions : MonoBehaviour
     [SerializeField] private int cardIndexSelected;
     public event Action OnCardsPlayed;
 
+
     [Header("References")]
     public GameManager.GameMode CurrentMode;
     [SerializeField] private DeckManager deck;
     [SerializeField] private FoeActions foe;
     [SerializeField] private GameManager gameManager;
+    [SerializeField] private PlayerMiniGameBehavior playerBoulderBehavior;
     
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         gameManager = GameManager.Instance;
+        playerBoulderBehavior = GetComponent<PlayerMiniGameBehavior>();
         deck = GameObject.Find("CardManager").GetComponent<DeckManager>();
         foe = GameObject.Find("Foe").GetComponent<FoeActions>();
         CurrentMode = GameManager.GameMode.Playing;
@@ -101,6 +104,14 @@ public class PlayerActions : MonoBehaviour
             }
         }
     }
+
+
+    public bool GetPlayerBoulderHoldingStatus()
+    {
+        return playerBoulderBehavior.IsPlayerBoulderHolder;
+    }
+    
+
 
     /// <summary>
     /// Pass the selected card to the DeckManager and set isCardSelected to true
