@@ -5,12 +5,12 @@ using UnityEngine.UI;
 
 public class HUDManager : MonoBehaviour
 {
-    [Header("Health")]
-    [SerializeField] private Image healthBar;
-
     [Header("Rounds")]
     [SerializeField] private TextMeshProUGUI rounds;
     [SerializeField] private TextMeshProUGUI roundsWon;
+    public GameObject YouWin;
+    public GameObject YouLose;
+    public GameObject YouTied;
 
     [Header("Sound")]
     [SerializeField] private Slider musicSlider;
@@ -19,11 +19,6 @@ public class HUDManager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        if(healthBar == null)
-        {
-            healthBar = GameObject.Find("HealthBar").GetComponent<Image>();
-        }
-
         if(musicSlider == null)
         {
             musicSlider = GameObject.Find("MusicPauseSlider").GetComponent<Slider>();
@@ -36,9 +31,12 @@ public class HUDManager : MonoBehaviour
     }
 
 
-    public void UpdateHealthBar(float healthPercentage)
+    public void UpdateRoundStats(int playerWins, int foeWins, int numberOfRounds)
     {
-        healthBar.fillAmount = healthPercentage;
+        roundsWon.text = "Player Wins: " + playerWins + " / 3 \n" 
+                        + "Foe Wins: " + foeWins + " / 3";
+
+        rounds.text = "Rounds: " + numberOfRounds;
     }
 
 }

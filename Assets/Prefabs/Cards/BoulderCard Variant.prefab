@@ -8,6 +8,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 761160438181645455, guid: a2b050778d8d6cd47a0ceba5ee276c91, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 737cfa1c9f08e9f4bae731652cfaf080, type: 3}
     - target: {fileID: 1408163036279234639, guid: a2b050778d8d6cd47a0ceba5ee276c91, type: 3}
       propertyPath: m_Name
       value: BoulderCard Variant
@@ -55,7 +59,7 @@ PrefabInstance:
     - target: {fileID: 7372718399925529024, guid: a2b050778d8d6cd47a0ceba5ee276c91, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: c76b6391b4d23a44880c939e2143275c, type: 2}
+      objectReference: {fileID: 2100000, guid: 687f88228a47cdc4fb70dae69da184cc, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

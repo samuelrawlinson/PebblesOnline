@@ -14,7 +14,7 @@ public class CameraController : MonoBehaviour
     // Update is called once per frame
     void LateUpdate()
     {
-        if(GameManager.Instance.IsPaused == false)
+        if(GameManager.Instance.IsPaused == false && GameManager.Instance.IsGameOver == false)
         {
             yaw += Input.GetAxis("Mouse X") * sensitivity;
             pitch -= Input.GetAxis("Mouse Y") * sensitivity;

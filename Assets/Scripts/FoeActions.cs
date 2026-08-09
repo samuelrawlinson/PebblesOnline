@@ -10,10 +10,7 @@ public class FoeActions : MonoBehaviour
     [SerializeField] public int CardIndexSelected;
     [SerializeField] private int lowestCardIndex = 3;
     [SerializeField] private int highestCardIndex = 6; // exclusive
-
-    [SerializeField] private float  selectionThinkTime;
-    [SerializeField] private float fastestThinkTime = 3;
-    [SerializeField] private float slowestThinkTime = 5;
+    [SerializeField] private float selectionThinkTime = 3;
     
     
     [Header("Boulder")]
@@ -45,7 +42,6 @@ public class FoeActions : MonoBehaviour
     {
         gameManager = GameManager.Instance;
         deck = GameObject.Find("CardManager").GetComponent<DeckManager>();
-        selectionThinkTime = Random.Range(fastestThinkTime, slowestThinkTime);
         StartCoroutine("ChooseCard");
     }
 
@@ -77,6 +73,10 @@ public class FoeActions : MonoBehaviour
             {
                 deck.SelectOrDeselectCard(CardIndexSelected, true);
                 HasCardSelected = true;
+            }
+            if(gameManager.IsGameOver)
+            {
+                break;
             }
         }
     

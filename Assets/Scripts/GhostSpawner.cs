@@ -12,7 +12,7 @@ public class GhostSpawner : MonoBehaviour
     {
         for(int numberOfGhosts = 0; numberOfGhosts < 10; numberOfGhosts++)
         {
-            SpawnGhost();
+            // SpawnGhost();
         }
     }
 

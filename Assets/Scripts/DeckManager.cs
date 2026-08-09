@@ -48,6 +48,7 @@ public class DeckManager : MonoBehaviour
     [SerializeField] private int foeMaxIndex = 6; // exclusive
     [SerializeField] private int playerMinIndex = 0;
     [SerializeField] private int playerMaxIndex = 3; // exclusive
+    [SerializeField] private int minimumCardLossPerRound = -1;
 
 
     [Header("Deck Composition")]
@@ -150,11 +151,16 @@ public class DeckManager : MonoBehaviour
         Card newPlayerCard = deck[randomPlayerCard];
         newFoeCard.cardPrefab = Instantiate(newFoeCard.cardPrefab, BlankCards[foeCardIndex].transform.position, transform.rotation);
         newPlayerCard.cardPrefab = Instantiate(newPlayerCard.cardPrefab, BlankCards[playerCardIndex].transform.position, transform.rotation);
-        
-        // Remove the revealed cards from the deck, and clear the blankCards list
+        Debug.Log("Player's card: " + newPlayerCard.cardType + " | and damage: " + newPlayerCard.damage);
+        Debug.Log("Foe's card: " + newFoeCard.cardType + " | and damage: " + newFoeCard.damage);        
+
+        // Delete the old blanks,  discard the revealed cards, and managed card outcomes
+        // Delete the revealed cards
+        Destroy(BlankCards[playerCardIndex]);
+        Destroy(BlankCards[foeCardIndex]);
         StartCoroutine(DiscardCard(newFoeCard));
         StartCoroutine(DiscardCard(newPlayerCard));
-        StartCoroutine(ManageCardOutcomes(playerCardIndex, foeCardIndex, newFoeCard, newPlayerCard));
+        StartCoroutine(ManageCardOutcomes(playerCardIndex, foeCardIndex, newPlayerCard, newFoeCard));
     }
 
 
@@ -182,15 +188,51 @@ public class DeckManager : MonoBehaviour
     {
         yield return new WaitForSeconds(cardChangeTime);
 
-        // Delete the revealed cards
-        Destroy(BlankCards[firstIndex]);
-        Destroy(BlankCards[secondIndex]);
+        // Update both players health because they both played a card
+        Debug.Log("Damage from playing one card");
+        gameManager.UpdateHealth(true, minimumCardLossPerRound);
+        gameManager.UpdateHealth(false, minimumCardLossPerRound);
+
+
+        // If it's a Hill, replace the card with a new one
+
+        // Player played a Hill
+        if(firstCard.cardType == CardType.Hill)
+        {
+            Debug.Log("Player played a Hill");
+            // Update the player's health with hill's healing
+            gameManager.UpdateHealth(true, cards[(int)CardType.Hill].damage);
+            
+            // Create a new blank card where the revealed card used to be
+            BlankCards[firstIndex] = Instantiate(cards[(int)CardType.Blank].cardPrefab, cardSlots[firstIndex], transform.rotation);
+
+            // Move the deck object down one card thickness
+            deckProp.transform.Translate(new Vector3(0, cardThickness * -(cardsDealtEachRound / cardsDealtEachRound), 0));
+        }
+        // Foe played a Hill
+        if(secondCard.cardType == CardType.Hill)
+        {
+            Debug.Log("Foe played a Hill");
+            // Update the foe's health with hill's healing
+            gameManager.UpdateHealth(false, cards[(int)CardType.Hill].damage);
+
+            // Create a new blank card where the revealed card used to be
+            BlankCards[secondIndex] = Instantiate(cards[(int)CardType.Blank].cardPrefab, cardSlots[secondIndex], transform.rotation);
+
+            // Move the deck object down one card thickness
+            deckProp.transform.Translate(new Vector3(0, cardThickness * -(cardsDealtEachRound / cardsDealtEachRound), 0));
+        }
+
+
 
         // If it's a Valley, the other player discards a card
+
+        // Player played a Valley
         if(firstCard.cardType == CardType.Valley)
         {
+            Debug.Log("Player played a Valley");
             // Update the foe's health with valley's damage
-            gameManager.UpdateHealth(false, cards[firstIndex].damage);
+            gameManager.UpdateHealth(false, cards[(int)CardType.Valley].damage);
 
 
             // Delete the first card that hasn't been destroyed already
@@ -203,10 +245,12 @@ public class DeckManager : MonoBehaviour
                 }
             }
         }
+        // Foe played a Valley
         if(secondCard.cardType == CardType.Valley)
         {
+            Debug.Log("Foe played a Valley");
             // Update the player's health with valley's damage
-            gameManager.UpdateHealth(true, cards[secondIndex].damage);
+            gameManager.UpdateHealth(true, cards[(int)CardType.Valley].damage);
 
             // Delete the first card that hasn't been destroyed already
             for(int playerCards = playerMinIndex; playerCards < playerMaxIndex; playerCards++)
@@ -217,36 +261,54 @@ public class DeckManager : MonoBehaviour
                     break;
                 }
             }
-        }
+        } 
 
-        
+        // If it's a Boulder, the other player loses if you hit them
 
-        // If it's a Hill, replace the card with a new one
-        if(firstCard.cardType == CardType.Hill)
+        // Player played a Boulder
+        if(firstCard.cardType == CardType.Boulder)
         {
-            // Create a new blank card where the revealed card used to be
-            BlankCards[firstIndex] = Instantiate(cards[(int)CardType.Blank].cardPrefab, cardSlots[firstIndex], transform.rotation);
-            
-            // Update the player's health with hill's healing
-            gameManager.UpdateHealth(true, cards[firstIndex].damage);
+            Debug.Log("Player played a Boulder");
+            // TODO add the boulder throw minigame
 
-            // Move the deck object down one card thickness
-            deckProp.transform.Translate(new Vector3(0, cardThickness * -(cardsDealtEachRound / cardsDealtEachRound), 0));
+            // Update the foe's health with boulder's damage
+            gameManager.UpdateHealth(false, cards[(int)CardType.Boulder].damage);
         }
-        if(secondCard.cardType == CardType.Hill)
+
+        // Foe played a Boulder
+        if(secondCard.cardType == CardType.Boulder)
         {
-            // Create a new blank card where the revealed card used to be
-            BlankCards[secondIndex] = Instantiate(cards[(int)CardType.Blank].cardPrefab, cardSlots[secondIndex], transform.rotation);
+            Debug.Log("Foe played a Boulder");
+            // TODO add the boulder throw minigame
             
-            // Update the foe's health with hill's healing
-            gameManager.UpdateHealth(false, cards[secondIndex].damage);
-
-            // Move the deck object down one card thickness
-            deckProp.transform.Translate(new Vector3(0, cardThickness * -(cardsDealtEachRound / cardsDealtEachRound), 0));
+            // Update the player's health with boulder's damage
+            gameManager.UpdateHealth(true, cards[(int)CardType.Boulder].damage);
         }
 
 
-        
+
+        // Player played a Pebble
+        if(firstCard.cardType == CardType.Pebble)
+        {
+            Debug.Log("Player played a Pebble");
+            // Update the foe's health with boulder's damage
+            gameManager.UpdateHealth(true, cards[(int)CardType.Pebble].damage);
+        }
+
+        // Foe played a Pebble
+        if(secondCard.cardType == CardType.Pebble)
+        {
+            Debug.Log("Foe played a Pebble");            
+            // Update the player's health with boulder's damage
+            gameManager.UpdateHealth(false, cards[(int)CardType.Pebble].damage);
+        }
+
+
+        // Determine if there's a winner
+        gameManager.ManageWins();
     }   
+
+
+    
 }
 

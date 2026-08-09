@@ -4,13 +4,15 @@ using UnityEngine.UI;
 public class PlayerHealth : MonoBehaviour
 {
     [SerializeField] private HUDManager hud;
+    [SerializeField] private GameManager gameManager;
     [SerializeField] private int maxHealth = 3;
-    [SerializeField] private int currentHealth;
+    public int CurrentHealth;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        currentHealth = maxHealth;
+        CurrentHealth = maxHealth;
+        gameManager = GameManager.Instance;
 
         if(hud == null)
         {
@@ -20,17 +22,11 @@ public class PlayerHealth : MonoBehaviour
 
     public void UpdateHealth(int amount)
     {
-        if(currentHealth < maxHealth)
+        if(CurrentHealth < maxHealth || amount < 0)
         {
             Debug.Log("PlayerHealth changing by " + amount);
-            currentHealth += amount;
-            Debug.Log("PlayerHealth: " + currentHealth);
+            CurrentHealth += amount;
+            Debug.Log("PlayerHealth: " + CurrentHealth);
         }
-        else if(currentHealth <= 0)
-        {
-            GameManager.Instance.PlayerLose();
-        }
-        
-        hud.UpdateHealthBar((float) currentHealth / (float) maxHealth);
     }
 }

@@ -685,9 +685,7 @@ MonoBehaviour:
   CardIndexSelected: 0
   lowestCardIndex: 3
   highestCardIndex: 6
-  selectionThinkTime: 0
-  fastestThinkTime: 3
-  slowestThinkTime: 5
+  selectionThinkTime: 3
   maxThrowDistance: 3
   personalBoulder: {fileID: 0}
   IsBoulderHolder: 0
@@ -709,3 +707,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18bc6a0c3135c8345b085f9474efbbad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FoeHealth
+  maxHealth: 3
+  currentHealth: 0

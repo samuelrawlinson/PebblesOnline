@@ -1,10 +1,13 @@
+using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance {get; private set;}
-    public static float gamesWon = 0;
+    public static int PlayerWins = 0;
+    public static int FoeWins = 0;
+    public static int Round = 1;
 
     [Header("Public Variables")]
     public bool IsPaused { get; private set; } = false;
@@ -40,27 +43,27 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        if(ghostSpawner != null)
+        if(ghostSpawner == null)
         {
             ghostSpawner = FindAnyObjectByType<GhostSpawner>();
         }
-        if(audioManager != null)
+        if(audioManager == null)
         {
             audioManager = FindAnyObjectByType<AudioManager>();
         }
-        if(playerHealth != null)
+        if(playerHealth == null)
         {
             playerHealth = FindAnyObjectByType<PlayerHealth>();
         }
-        if(foeHealth != null)
+        if(foeHealth == null)
         {
             foeHealth = FindAnyObjectByType<FoeHealth>();
         }
-        if(deckManager != null)
+        if(deckManager == null)
         {
             deckManager = FindAnyObjectByType<DeckManager>();
         }
-        if(hudManager != null)
+        if(hudManager == null)
         {
             hudManager = FindAnyObjectByType<HUDManager>();
         }
@@ -78,16 +81,51 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void PlayerLose()
+    private void UpdateRound()
     {
+        // Update overlay text
+        hudManager.UpdateRoundStats(PlayerWins, FoeWins, Round);
+        Round++;
         IsGameOver = true;
-        Debug.Log("You lose!");
     }
 
-    public void PlayerWin()
+    public void ManageWins()
     {
-        IsGameOver = true;
-        Debug.Log("You win!");
+        if(playerHealth.CurrentHealth <= 0 && foeHealth.CurrentHealth <= 0)
+        {
+            Debug.Log("You tied round " + Round);
+            FoeWins++;
+            PlayerWins++;
+            UpdateRound();
+            hudManager.YouTied.SetActive(true);
+        }
+        else if(foeHealth.CurrentHealth <= 0)
+        {
+            Debug.Log("You win round " + Round + "!");
+            PlayerWins++;
+            UpdateRound();
+            hudManager.YouWin.SetActive(true);
+        }
+        else if(playerHealth.CurrentHealth <= 0)
+        {
+            Debug.Log("You lose round " + Round);
+            FoeWins++;
+            UpdateRound();
+            hudManager.YouLose.SetActive(true);
+        }
+
+
+        // Declare Pebbler
+        if(PlayerWins >= 3)
+        {
+            IsGameOver = true;
+            Debug.Log("Player is the new Pebbler!");
+        }
+        else if(FoeWins >= 3)
+        {
+            IsGameOver = true;
+            Debug.Log("Foe is the new Pebbler!");
+        }
     }
 
     public void Pause()

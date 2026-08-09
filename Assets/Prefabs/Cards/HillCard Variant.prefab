@@ -8,9 +8,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 761160438181645455, guid: a2b050778d8d6cd47a0ceba5ee276c91, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 5a808d0cd95437f4fbdd6faccc4fd72e, type: 3}
     - target: {fileID: 1408163036279234639, guid: a2b050778d8d6cd47a0ceba5ee276c91, type: 3}
       propertyPath: m_Name
       value: HillCard Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 3884952243014999798, guid: a2b050778d8d6cd47a0ceba5ee276c91, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3884952243014999798, guid: a2b050778d8d6cd47a0ceba5ee276c91, type: 3}
       propertyPath: m_LocalPosition.x
@@ -55,7 +63,7 @@ PrefabInstance:
     - target: {fileID: 7372718399925529024, guid: a2b050778d8d6cd47a0ceba5ee276c91, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 1663028770e1d0b4c83cdef79271c784, type: 2}
+      objectReference: {fileID: 2100000, guid: 687f88228a47cdc4fb70dae69da184cc, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
