@@ -4,26 +4,17 @@ public class CameraController : MonoBehaviour
 {
     // Declaration of Variables
     [SerializeField] private Transform target;
-    [SerializeField] private GameManager gameManager;
-    [SerializeField] private float distance = 3f;
+    [SerializeField] private float distance = 2f;
     [SerializeField] private float sensitivity = 5f;
     [SerializeField] private float maxPitch = 10f;
     [SerializeField] private float minPitch = -60f;
     private float yaw;
     private float pitch;
 
-
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        gameManager = GameManager.Instance;
-    }
-
     // Update is called once per frame
     void LateUpdate()
     {
-        if(gameManager.IsPaused == false)
+        if(GameManager.Instance.IsPaused == false)
         {
             yaw += Input.GetAxis("Mouse X") * sensitivity;
             pitch -= Input.GetAxis("Mouse Y") * sensitivity;
@@ -38,4 +29,5 @@ public class CameraController : MonoBehaviour
             }
         }
     }
+
 }

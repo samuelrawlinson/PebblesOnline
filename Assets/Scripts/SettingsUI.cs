@@ -6,10 +6,12 @@ public class SettingsUI : MonoBehaviour
     public void SetMusicVolume(float amount)
     {
         AudioManager.Instance.MusicSource.volume = amount;
+        AudioManager.Instance.UpdateMusicVolume(amount);
     }
 
     public void SetSFXVolume(float amount)
     {
         AudioManager.Instance.SFXSource.volume = amount;
+        AudioManager.Instance.UpdateSFXVolume(amount);
     }
 }

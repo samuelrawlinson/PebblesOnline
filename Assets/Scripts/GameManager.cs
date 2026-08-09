@@ -7,15 +7,17 @@ public class GameManager : MonoBehaviour
     public static float gamesWon = 0;
 
     [Header("Public Variables")]
-    public bool IsPaused = false;
+    public bool IsPaused { get; private set; } = false;
+    public bool IsGameOver { get; private set;} = false;
     public GameObject boulderPrefab;
 
     [Header("Managers")]
     [SerializeField] private GhostSpawner ghostSpawner;
     [SerializeField] private AudioManager audioManager;
     [SerializeField] private PlayerHealth playerHealth;
+    [SerializeField] private FoeHealth foeHealth;
     [SerializeField] private DeckManager deckManager;
-    public HUDManager HUDManager {get; private set;}
+    [SerializeField] private HUDManager hudManager;
 
     public enum GameMode
     {
@@ -50,41 +52,53 @@ public class GameManager : MonoBehaviour
         {
             playerHealth = FindAnyObjectByType<PlayerHealth>();
         }
+        if(foeHealth != null)
+        {
+            foeHealth = FindAnyObjectByType<FoeHealth>();
+        }
         if(deckManager != null)
         {
             deckManager = FindAnyObjectByType<DeckManager>();
         }
-        if(HUDManager != null)
+        if(hudManager != null)
         {
-            HUDManager = FindAnyObjectByType<HUDManager>();
+            hudManager = FindAnyObjectByType<HUDManager>();
         }
     }
 
-    // Update is called once per frame
-    void Update()
+    public void UpdateHealth(bool isPlayer, int amount)
     {
-        
-    }
-
-    public void RevealAllCards()
-    {
-        deckManager.RevealCards();
+        if(isPlayer)
+        {
+            playerHealth.UpdateHealth(amount);
+        }
+        else
+        {
+            foeHealth.UpdateHealth(amount);
+        }
     }
 
     public void PlayerLose()
     {
-        return;
+        IsGameOver = true;
+        Debug.Log("You lose!");
+    }
+
+    public void PlayerWin()
+    {
+        IsGameOver = true;
+        Debug.Log("You win!");
     }
 
     public void Pause()
     {
         IsPaused = true;
-        Time.timeScale = 0f;
+        Time.timeScale = 0;
     }
 
-    public void Unpause()
+    public void Resume()
     {
         IsPaused = false;
-        Time.timeScale = 1f;
+        Time.timeScale = 1;
     }
 }

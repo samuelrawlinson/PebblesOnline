@@ -7,11 +7,13 @@ public class AudioManager : MonoBehaviour
 
     [Header("Music")]
     public AudioSource MusicSource;
+    public static float MusicVolume { get; private set;}
     [SerializeField] private AudioClip menuMusic;
     [SerializeField] private AudioClip gameMusic;
 
     [Header("SFX")]
     public AudioSource SFXSource;
+    public static float SFXVolume { get; private set;}
     [SerializeField] private AudioClip buttonClick;
     [SerializeField] private AudioClip drawCard;
     [SerializeField] private AudioClip boulderThrow;
@@ -28,13 +30,18 @@ public class AudioManager : MonoBehaviour
         }
         Instance = this;
         DontDestroyOnLoad(gameObject);
+        MusicVolume = MusicSource.volume = 0.5f;
+        SFXVolume = SFXSource.volume = 0.5f;
         
     }
 
     void Start()
     {
         UpdateMusic(false);
-        MusicSource.volume = 0.5f;
+
+        // Preserve volume levels
+        MusicSource.volume = MusicVolume;
+        SFXSource.volume = SFXVolume;
     }
 
 
@@ -51,10 +58,30 @@ public class AudioManager : MonoBehaviour
         }
         else if(MusicSource != null && hasGameStarted == true)
         {
+            // Stop the menu song and play the gameplay music
             MusicSource.Stop();
             MusicSource.clip = gameMusic;
             MusicSource.loop = true;
             MusicSource.Play();
         }
+    }
+
+    /// <summary>
+    /// Set the static music volume variable equal to the new present volume set by the slider
+    /// </summary>
+    /// <param name="newVolume"></param>
+    public void UpdateMusicVolume(float newVolume)
+    {
+        MusicVolume = newVolume;
+    }
+
+
+    /// <summary>
+    /// Set the static SFX volume variable equal to the new present volume set by the slider
+    /// </summary>
+    /// <param name="newVolume"></param>
+    public void UpdateSFXVolume(float newVolume)
+    {
+        SFXVolume = newVolume;
     }
 }

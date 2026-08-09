@@ -12,6 +12,10 @@ public class HUDManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI rounds;
     [SerializeField] private TextMeshProUGUI roundsWon;
 
+    [Header("Sound")]
+    [SerializeField] private Slider musicSlider;
+    [SerializeField] private Slider sfxSlider;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -19,16 +23,22 @@ public class HUDManager : MonoBehaviour
         {
             healthBar = GameObject.Find("HealthBar").GetComponent<Image>();
         }
+
+        if(musicSlider == null)
+        {
+            musicSlider = GameObject.Find("MusicPauseSlider").GetComponent<Slider>();
+        }
+
+        if(sfxSlider == null)
+        {
+            sfxSlider = GameObject.Find("SFXPauseSlider").GetComponent<Slider>();
+        }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     public void UpdateHealthBar(float healthPercentage)
     {
         healthBar.fillAmount = healthPercentage;
     }
+
 }

@@ -1,9 +1,7 @@
 using UnityEngine;
-using UnityEngine.UI;
 
-public class PlayerHealth : MonoBehaviour
+public class FoeHealth : MonoBehaviour
 {
-    [SerializeField] private HUDManager hud;
     [SerializeField] private int maxHealth = 3;
     [SerializeField] private int currentHealth;
 
@@ -11,26 +9,19 @@ public class PlayerHealth : MonoBehaviour
     void Start()
     {
         currentHealth = maxHealth;
-
-        if(hud == null)
-        {
-            hud = GetComponent<HUDManager>();
-        }
     }
 
     public void UpdateHealth(int amount)
     {
         if(currentHealth < maxHealth)
         {
-            Debug.Log("PlayerHealth changing by " + amount);
+            Debug.Log("FoeHealth changing by " + amount);
             currentHealth += amount;
-            Debug.Log("PlayerHealth: " + currentHealth);
+            Debug.Log("FoeHealth: " + currentHealth);
         }
         else if(currentHealth <= 0)
         {
-            GameManager.Instance.PlayerLose();
+            GameManager.Instance.PlayerWin();
         }
-        
-        hud.UpdateHealthBar((float) currentHealth / (float) maxHealth);
     }
 }

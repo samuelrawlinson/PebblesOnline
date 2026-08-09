@@ -471,6 +471,7 @@ GameObject:
   - component: {fileID: 696536658865623076}
   - component: {fileID: -8080761187784877371}
   - component: {fileID: 2291453455893505157}
+  - component: {fileID: 905247748146083807}
   m_Layer: 0
   m_Name: Foe
   m_TagString: Untagged
@@ -680,11 +681,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f58d224142184b6468bc428a6d7066c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FoeMovement
-  newBoulder: {fileID: 0}
+  HasCardSelected: 0
+  CardIndexSelected: 0
+  lowestCardIndex: 3
+  highestCardIndex: 6
+  selectionThinkTime: 0
+  fastestThinkTime: 3
+  slowestThinkTime: 5
   maxThrowDistance: 3
   personalBoulder: {fileID: 0}
   IsBoulderHolder: 0
-  target: {fileID: 0}
   gameManager: {fileID: 0}
   agent: {fileID: 0}
   animator: {fileID: 0}
+  target: {fileID: 0}
+  deck: {fileID: 0}
+  currentMode: 0
+--- !u!114 &905247748146083807
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8128338025913727274}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18bc6a0c3135c8345b085f9474efbbad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FoeHealth

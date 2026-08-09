@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -15,35 +16,25 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         playerActions = GetComponent<PlayerActions>();
+
     }
 
-    // Update is called once per frame
+
     void Update()
     {
-
-        // Get movement axes and move the player accordingly
-        horizontalInput = Input.GetAxis("Horizontal");
-        verticalInput = Input.GetAxis("Vertical");
-
-        if(playerActions.currentMode == GameManager.GameMode.Dodging)
+        if(playerActions.CurrentMode == GameManager.GameMode.Dodging)
         {
-            HandleMovement();
+            HandleMovementInput();
         }
     }
 
-    /// <summary>
-    /// Aligns the player to face the same direction as the camera, and moves the player according to the input axes
-    /// </summary>
-    private void HandleMovement()
-    {
-        Vector3 forward = cameraTransform.forward;
-        forward.y = 0f;
-        forward.Normalize();
-        Vector3 right = cameraTransform.right;
-        right.y = 0f;
-        right.Normalize();
 
-        Vector3 movementDirection = (forward * verticalInput + right * horizontalInput).normalized;
-        transform.Translate(movementDirection * moveSpeed * Time.deltaTime);
+    /// <summary>
+    /// Move the player exclusively on the X axis to dodge boulders
+    /// </summary>
+    private void HandleMovementInput()
+    {
+        horizontalInput = Input.GetAxis("Horizontal");
+        transform.Translate(Vector3.right * horizontalInput * moveSpeed * Time.deltaTime);
     }
 }
