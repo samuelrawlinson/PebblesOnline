@@ -31,12 +31,11 @@ public class FoeActions : MonoBehaviour
         StartCoroutine("ChooseCard");
     }
 
-
     /// <summary>
     /// Select a card at random, and set HasCardSelected to true
     /// </summary>
     /// <returns></returns>
-    IEnumerator ChooseCard()
+    public IEnumerator ChooseCard()
     {
         yield return new WaitForSeconds(selectionThinkTime);
 

@@ -6,6 +6,9 @@ public class Boulder : MonoBehaviour
 {
     [Header("Boulder")]
     public GameObject boulderHolder;
+    public int Strikes = 0;
+    public int StrikesTilOut = 3;
+    [SerializeField] private int boulderDamage = -3;
     [SerializeField] private FoeMiniGameBehavior foeBehavior;
     [SerializeField] private PlayerMiniGameBehavior playerBehavior;
 
@@ -14,8 +17,7 @@ public class Boulder : MonoBehaviour
     [SerializeField] private GameManager gameManager;
     [SerializeField] private DeckManager deckManager;
     [SerializeField] private Vector3 boulderOffset = new Vector3(0f,3.25f,0f);
-    [SerializeField] private float throwingForce = 10f;
-    [SerializeField] private float lifeTime = 0.5f;
+    [SerializeField] private float throwingForce = 20f;
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -60,7 +62,6 @@ public class Boulder : MonoBehaviour
     {
         Vector3 throwingDirection = (targetPosition - transform.position).normalized;
         rb.AddForce(throwingDirection * throwingForce, ForceMode.Impulse);
-        StartCoroutine("DestroyIfMissed", lifeTime);
     }
 
     void OnCollisionEnter(Collision collision)
@@ -68,23 +69,43 @@ public class Boulder : MonoBehaviour
         if(collision.gameObject.CompareTag("Player") && gameManager.PlayerActions.CurrentMode != GameManager.GameMode.Throwing)
         {
             // Update the player's health with boulder's damage
-            gameManager.UpdateHealth(true, deckManager.Cards[(int)DeckManager.CardType.Boulder].damage);
-            gameManager.ManageWins();
-            Destroy(gameObject);
+            EndMinigame(true);
         }
         if(collision.gameObject.CompareTag("Foe") && gameManager.PlayerActions.CurrentMode != GameManager.GameMode.Dodging)
         {
             // Update the foe's health with boulder's damage
-            gameManager.UpdateHealth(false, deckManager.Cards[(int)DeckManager.CardType.Boulder].damage);
-            gameManager.ManageWins();
-            Destroy(collision.gameObject);
-            Destroy(gameObject);
+            EndMinigame(false);
+           
+        }
+        if(collision.gameObject.CompareTag("Wall"))
+        {
+            Debug.Log("Boulder hit the wall");
+            if(gameManager.PlayerActions.CurrentMode == GameManager.GameMode.Throwing)
+            {
+                Debug.Log("Boulder returned to player");
+                playerBehavior.IsPlayerBoulderHolder = true;
+            }
+            else if(gameManager.PlayerActions.CurrentMode == GameManager.GameMode.Dodging)
+            {
+                Debug.Log("Boulder returned to foe");
+                foeBehavior.IsFoeBoulderHolder = true;
+            }
+
+            Strikes++;
+
+            if(Strikes >= StrikesTilOut)
+            {
+                Debug.Log("struck out, back to game");
+                gameManager.OnMiniGameEnd?.Invoke();
+                Destroy(gameObject);
+            }
         }
     }
 
-    IEnumerator DestroyIfMissed(float seconds)
+    private void EndMinigame(bool damagePlayer)
     {
-        yield return new WaitForSeconds(seconds);
+        gameManager.OnMiniGameEnd?.Invoke();
+        gameManager.UpdateHealth(damagePlayer, boulderDamage);
         Destroy(gameObject);
     }
 }

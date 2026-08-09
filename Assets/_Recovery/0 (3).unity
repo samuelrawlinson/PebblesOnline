@@ -8485,6 +8485,7 @@ MonoBehaviour:
   target: {fileID: 0}
   gameManager: {fileID: 1228587833}
   animator: {fileID: 0}
+  deck: {fileID: 0}
   player: {fileID: 0}
 --- !u!1 &7875686600430734911
 GameObject:

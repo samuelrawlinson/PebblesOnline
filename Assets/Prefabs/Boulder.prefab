@@ -154,4 +154,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Boulder
   boulderHolder: {fileID: 0}
+  foeBehavior: {fileID: 0}
+  playerBehavior: {fileID: 0}
   rb: {fileID: 0}
+  gameManager: {fileID: 0}
+  deckManager: {fileID: 0}
+  boulderOffset: {x: 0, y: 3.25, z: 0}
+  throwingForce: 20
+  lifeTime: 1

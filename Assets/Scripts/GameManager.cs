@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
     public bool IsPaused { get; private set; } = false;
     public bool IsGameOver { get; private set;} = false;
     public UnityEvent OnMiniGameStart = new UnityEvent();
+    public UnityEvent OnMiniGameEnd = new UnityEvent();
     public GameObject boulderPrefab;
 
     [Header("Managers")]
@@ -23,6 +24,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private HUDManager hudManager;
 
     [Header("Players")]
+    [SerializeField] private int winsNeededToBecomePebbler = 3;
     [SerializeField] private PlayerHealth playerHealth;
     [SerializeField] private FoeHealth foeHealth;
     [SerializeField] private FoeActions foeActions;
@@ -140,12 +142,12 @@ public class GameManager : MonoBehaviour
 
 
         // Declare Pebbler
-        if(PlayerWins >= 3)
+        if(PlayerWins >= winsNeededToBecomePebbler)
         {
             IsGameOver = true;
             Debug.Log("Player is the new Pebbler!");
         }
-        else if(FoeWins >= 3)
+        else if(FoeWins >= winsNeededToBecomePebbler)
         {
             IsGameOver = true;
             Debug.Log("Foe is the new Pebbler!");

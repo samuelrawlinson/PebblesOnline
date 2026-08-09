@@ -36,7 +36,7 @@ public class HUDManager : MonoBehaviour
         roundsWon.text = "Player Wins: " + playerWins + " / 3 \n" 
                         + "Foe Wins: " + foeWins + " / 3";
 
-        rounds.text = "Rounds: " + numberOfRounds;
+        rounds.text = "Round: " + numberOfRounds;
     }
 
 }
