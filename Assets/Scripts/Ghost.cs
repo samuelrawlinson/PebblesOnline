@@ -3,26 +3,16 @@ using UnityEngine;
 
 public class Ghost : MonoBehaviour
 {
-    [SerializeField] private float rotateSpeed = 3f;
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+    [SerializeField] private float decendSpeed = 3f;
+    [SerializeField] private float decendLimit = -1;
 
     // Update is called once per frame
     void Update()
     {
-        transform.Rotate(0f, 90f * Time.deltaTime * rotateSpeed, 0f ) ;
-    }
-
-    void OnCollisionEnter(Collision collision)
-    {
-        if(collision.gameObject.CompareTag("Boulder"))
+        transform.Translate(Vector3.down * decendSpeed * Time.deltaTime);
+        if(transform.position.y <= decendLimit)
         {
-            Debug.Log("Collided with boulder");
-            Destroy(collision.gameObject);
+            Destroy(gameObject);
         }
     }
 }

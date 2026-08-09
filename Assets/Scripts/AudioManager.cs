@@ -15,11 +15,11 @@ public class AudioManager : MonoBehaviour
     public AudioSource SFXSource;
     public static float SFXVolume { get; private set;}
     [SerializeField] private AudioClip buttonClick;
-    [SerializeField] private AudioClip drawCard;
     [SerializeField] private AudioClip boulderThrow;
-    [SerializeField] private AudioClip impactCrunch;
-    [SerializeField] private AudioClip ghostCry;
-    [SerializeField] private AudioClip cardSelect;
+    [SerializeField] private AudioClip boulderCrunch;
+    [SerializeField] private AudioClip wallCrash;
+    [SerializeField] private AudioClip playerLost;
+    [SerializeField] private AudioClip ghostDenial;
 
     void Awake()
     {
@@ -38,6 +38,8 @@ public class AudioManager : MonoBehaviour
     void Start()
     {
         UpdateMusic(false);
+
+        buttonClick = Resources.Load<AudioClip>("SFX_UIClick");
 
         // Preserve volume levels
         MusicSource.volume = MusicVolume;
@@ -64,6 +66,11 @@ public class AudioManager : MonoBehaviour
             MusicSource.loop = true;
             MusicSource.Play();
         }
+    }
+
+    public void PlayButtonPress()
+    {
+        SFXSource.PlayOneShot(buttonClick);
     }
 
     /// <summary>

@@ -18,7 +18,6 @@ public class GameManager : MonoBehaviour
     public GameObject boulderPrefab;
 
     [Header("Managers")]
-    [SerializeField] private GhostSpawner ghostSpawner;
     [SerializeField] private AudioManager audioManager;
     [SerializeField] private DeckManager deckManager;
     [SerializeField] private HUDManager hudManager;
@@ -52,13 +51,9 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        if(ghostSpawner == null)
-        {
-            ghostSpawner = FindAnyObjectByType<GhostSpawner>();
-        }
         if(audioManager == null)
         {
-            audioManager = FindAnyObjectByType<AudioManager>();
+            audioManager = AudioManager.Instance;
         }
         if(deckManager == null)
         {
@@ -164,5 +159,10 @@ public class GameManager : MonoBehaviour
     {
         IsPaused = false;
         Time.timeScale = 1;
+    }
+
+    public void PlaySoundEffect()
+    {
+        audioManager.PlayButtonPress();
     }
 }

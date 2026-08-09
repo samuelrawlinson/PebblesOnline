@@ -65,7 +65,7 @@ public class FoeMiniGameBehavior : MonoBehaviour
             StartCoroutine("ThrowBoulder");
             Debug.Log("Foe in throwing position");
         }
-        else if(foe.CurrentMode == GameManager.GameMode.Playing)
+        else if(foe.CurrentMode == GameManager.GameMode.Playing && gameManager.IsGameOver != true)
         {
             agent.SetDestination(playingPosition);
             foe.StartCoroutine("ChooseCard");
@@ -114,7 +114,7 @@ public class FoeMiniGameBehavior : MonoBehaviour
             foe.Animator.SetBool("IsHoldingBoulder", false);
 
 
-            boulder.BeThrownByHolder(target.position + new Vector3(0, 2, 0));
+            boulder.BeThrownByHolder(target.position);
             Debug.Log("Strikes: " + boulder.Strikes);
             // TODO make it the length of the throw animation
             yield return new WaitForSeconds(decisionTime + decisionTime);

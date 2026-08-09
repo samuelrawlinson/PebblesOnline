@@ -634,11 +634,11 @@ MonoBehaviour:
   gameMusic: {fileID: 0}
   SFXSource: {fileID: 75857013}
   buttonClick: {fileID: 0}
-  drawCard: {fileID: 0}
   boulderThrow: {fileID: 0}
-  impactCrunch: {fileID: 0}
-  ghostCry: {fileID: 0}
-  cardSelect: {fileID: 0}
+  boulderCrunch: {fileID: 0}
+  wallCrash: {fileID: 0}
+  playerLost: {fileID: 0}
+  ghostDenial: {fileID: 0}
 --- !u!1 &94336904
 GameObject:
   m_ObjectHideFlags: 0
@@ -1384,7 +1384,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1c42bd2107e28e4aa0143b102b4dc51, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GhostSpawner
-  ghost: {fileID: 5247298619941674407, guid: e31c8b1759a78c644930c32b8d4b14cf, type: 3}
+  randomX: 0
+  randomY: 0
+  randomZ: 0
+  randomPosition: {x: 0, y: 0, z: 0}
+  minXBounds: -9
+  maxXBounds: 9
+  minYBounds: 1
+  maxYBounds: 8
+  minZBounds: -3
+  maxZBounds: 3
+  ghostBatchSize: 5
+  ghostBatchCookTime: 2
+  gameManager: {fileID: 0}
+  ghostPrefab: {fileID: 5247298619941674407, guid: e31c8b1759a78c644930c32b8d4b14cf, type: 3}
 --- !u!1 &425149076
 GameObject:
   m_ObjectHideFlags: 0
@@ -3397,6 +3410,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+      - m_Target: {fileID: 1228587833}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: PlaySoundEffect
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
 --- !u!114 &1014631209
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3730,7 +3755,7 @@ PrefabInstance:
     - target: {fileID: 1283589366699936544, guid: 74aad3ae2575553418e62509b1a3d171, type: 3}
       propertyPath: target
       value: 
-      objectReference: {fileID: 8012511550512591946}
+      objectReference: {fileID: 80761039987383757}
     - target: {fileID: 1283589366699936544, guid: 74aad3ae2575553418e62509b1a3d171, type: 3}
       propertyPath: gameManager
       value: 
@@ -3778,6 +3803,10 @@ PrefabInstance:
     - target: {fileID: 6443799019685886949, guid: 74aad3ae2575553418e62509b1a3d171, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7324254824733267071, guid: 74aad3ae2575553418e62509b1a3d171, type: 3}
+      propertyPath: m_Constraints
+      value: 126
       objectReference: {fileID: 0}
     - target: {fileID: 8128338025913727274, guid: 74aad3ae2575553418e62509b1a3d171, type: 3}
       propertyPath: m_Name
@@ -4430,7 +4459,6 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   boulderPrefab: {fileID: 3170047630518236227, guid: c50682390aed4df489d7df9d14af25b1, type: 3}
-  ghostSpawner: {fileID: 0}
   audioManager: {fileID: 75857015}
   deckManager: {fileID: 302846202}
   hudManager: {fileID: 1398218652}
@@ -8485,6 +8513,7 @@ MonoBehaviour:
   target: {fileID: 0}
   gameManager: {fileID: 1228587833}
   animator: {fileID: 0}
+  deck: {fileID: 0}
   player: {fileID: 0}
 --- !u!1 &7875686600430734911
 GameObject:

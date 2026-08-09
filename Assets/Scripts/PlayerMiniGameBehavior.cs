@@ -55,7 +55,12 @@ public class PlayerMiniGameBehavior : MonoBehaviour
         player.CurrentMode = GameManager.GameMode.Playing;
         IsPlayerBoulderHolder = false;
         deck.RoundlyDamage();
-        gameManager.ManageWins();
+
+        if(gameManager.IsGameOver != true)
+        {
+            gameManager.ManageWins();
+        }
+
         SetGameMode();
     }
 
@@ -66,7 +71,7 @@ public class PlayerMiniGameBehavior : MonoBehaviour
             transform.position = dodgingPosition;
             Debug.Log("Player in dodging position");
         }
-        else if(player.CurrentMode == GameManager.GameMode.Playing && transform.position != playingPosition)
+        else if(player.CurrentMode == GameManager.GameMode.Playing && transform.position != playingPosition && gameManager.IsGameOver != true)
         {
             transform.position = playingPosition;
             Debug.Log("Player in playing position");

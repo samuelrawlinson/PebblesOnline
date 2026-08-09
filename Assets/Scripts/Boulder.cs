@@ -15,7 +15,6 @@ public class Boulder : MonoBehaviour
     [Header("References")]
     [SerializeField] private Rigidbody rb;
     [SerializeField] private GameManager gameManager;
-    [SerializeField] private DeckManager deckManager;
     [SerializeField] private Vector3 boulderOffset = new Vector3(0f,3.25f,0f);
     [SerializeField] private float throwingForce = 20f;
 
@@ -25,7 +24,6 @@ public class Boulder : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         gameManager = GameManager.Instance;
-        deckManager = GameObject.Find("CardManager").GetComponent<DeckManager>();
         
 
         // If the player is the boulder holder, find it, if not, find the foe
@@ -61,6 +59,11 @@ public class Boulder : MonoBehaviour
     public void BeThrownByHolder(Vector3 targetPosition)
     {
         Vector3 throwingDirection = (targetPosition - transform.position).normalized;
+
+        // if(foeBehavior.IsFoeBoulderHolder)
+        // {
+        //     throwingForce *= 2;
+        // }
         rb.AddForce(throwingDirection * throwingForce, ForceMode.Impulse);
     }
 
@@ -79,33 +82,55 @@ public class Boulder : MonoBehaviour
         }
         if(collision.gameObject.CompareTag("Wall"))
         {
-            Debug.Log("Boulder hit the wall");
-            if(gameManager.PlayerActions.CurrentMode == GameManager.GameMode.Throwing)
-            {
-                Debug.Log("Boulder returned to player");
-                playerBehavior.IsPlayerBoulderHolder = true;
-            }
-            else if(gameManager.PlayerActions.CurrentMode == GameManager.GameMode.Dodging)
-            {
-                Debug.Log("Boulder returned to foe");
-                foeBehavior.IsFoeBoulderHolder = true;
-            }
-
-            Strikes++;
-
-            if(Strikes >= StrikesTilOut)
-            {
-                Debug.Log("struck out, back to game");
-                gameManager.OnMiniGameEnd?.Invoke();
-                Destroy(gameObject);
-            }
+            Debug.Log("Boulder hit a wall and should return and strike");
+            ManageBoulderStrikes();
         }
     }
+
+
+    void OnTriggerEnter(Collider other)
+    {
+        if(other.gameObject.CompareTag("Ghost"))
+        {
+            Debug.Log("Boulder hit a ghost and should return and strike");
+            ManageBoulderStrikes();
+        }
+    }
+
+
+    private void ManageBoulderStrikes()
+    {
+        if(gameManager.PlayerActions.CurrentMode == GameManager.GameMode.Throwing)
+        {
+            Debug.Log("Boulder returned to player");
+            playerBehavior.IsPlayerBoulderHolder = true;
+        }
+        else if(gameManager.PlayerActions.CurrentMode == GameManager.GameMode.Dodging)
+        {
+            Debug.Log("Boulder returned to foe");
+            foeBehavior.IsFoeBoulderHolder = true;
+        }
+
+        Strikes++;
+        Debug.Log("Strike " + Strikes);
+
+        if(Strikes >= StrikesTilOut)
+        {
+            Debug.Log("struck out, back to game");
+            gameManager.OnMiniGameEnd?.Invoke();
+            Destroy(gameObject);
+        }
+    }
+
 
     private void EndMinigame(bool damagePlayer)
     {
         gameManager.OnMiniGameEnd?.Invoke();
         gameManager.UpdateHealth(damagePlayer, boulderDamage);
+        if(gameManager.IsGameOver != true)
+        {
+            gameManager.ManageWins();
+        }
         Destroy(gameObject);
     }
 }

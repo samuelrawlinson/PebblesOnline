@@ -238,6 +238,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 1909083894}
+        m_TargetAssemblyTypeName: AudioManager, Assembly-CSharp
+        m_MethodName: PlayButtonPress
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
       - m_Target: {fileID: 1083152321}
         m_TargetAssemblyTypeName: SceneController, Assembly-CSharp
         m_MethodName: LoadNewScene
@@ -657,6 +669,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 1909083894}
+        m_TargetAssemblyTypeName: AudioManager, Assembly-CSharp
+        m_MethodName: PlayButtonPress
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
       - m_Target: {fileID: 836920747}
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
         m_MethodName: SetActive
@@ -1823,6 +1847,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 1909083894}
+        m_TargetAssemblyTypeName: AudioManager, Assembly-CSharp
+        m_MethodName: PlayButtonPress
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 836920747}
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
         m_MethodName: SetActive
@@ -1968,6 +2004,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 1909083894}
+        m_TargetAssemblyTypeName: AudioManager, Assembly-CSharp
+        m_MethodName: PlayButtonPress
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 1083152321}
         m_TargetAssemblyTypeName: SceneController, Assembly-CSharp
         m_MethodName: ExitGame
@@ -3367,12 +3415,12 @@ MonoBehaviour:
   menuMusic: {fileID: 8300000, guid: 70714fc70811e4e4fb394b22ed291140, type: 3}
   gameMusic: {fileID: 8300000, guid: d5d8023ada1c177498d0fafbb17f6bf3, type: 3}
   SFXSource: {fileID: 1909083892}
-  buttonClick: {fileID: 0}
-  drawCard: {fileID: 0}
-  boulderThrow: {fileID: 0}
-  impactCrunch: {fileID: 0}
-  ghostCry: {fileID: 0}
-  cardSelect: {fileID: 0}
+  buttonClick: {fileID: 8300000, guid: 724b8aaa0e3234148b4e863b838d2bb7, type: 3}
+  boulderThrow: {fileID: 8300000, guid: 0a01a86ad75096a45a4593cf4ba478f0, type: 3}
+  boulderCrunch: {fileID: 8300000, guid: 2a6638060127a7446bc253c74d46fceb, type: 3}
+  wallCrash: {fileID: 8300000, guid: 5bef764f914da6f449960c1969773397, type: 3}
+  playerLost: {fileID: 8300000, guid: 87ab25053840c26449ffd467324744d2, type: 3}
+  ghostDenial: {fileID: 8300000, guid: d2a31172633f3c14698b054bdde9abf6, type: 3}
 --- !u!4 &1909083895
 Transform:
   m_ObjectHideFlags: 0
