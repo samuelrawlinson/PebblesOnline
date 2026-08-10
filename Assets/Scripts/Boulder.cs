@@ -1,5 +1,3 @@
-using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class Boulder : MonoBehaviour
@@ -15,6 +13,7 @@ public class Boulder : MonoBehaviour
     [Header("References")]
     [SerializeField] private Rigidbody rb;
     [SerializeField] private GameManager gameManager;
+    [SerializeField] private AudioManager audioManager;
     [SerializeField] private Vector3 boulderOffset = new Vector3(0f,3.25f,0f);
     [SerializeField] private float throwingForce = 20f;
 
@@ -24,6 +23,7 @@ public class Boulder : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         gameManager = GameManager.Instance;
+        audioManager = AudioManager.Instance;
         
 
         // If the player is the boulder holder, find it, if not, find the foe
@@ -58,12 +58,8 @@ public class Boulder : MonoBehaviour
     /// <param name="targetPosition"></param>
     public void BeThrownByHolder(Vector3 targetPosition)
     {
+        audioManager.PlaySoundEffect(AudioManager.SoundEffect.Swoosh);
         Vector3 throwingDirection = (targetPosition - transform.position).normalized;
-
-        // if(foeBehavior.IsFoeBoulderHolder)
-        // {
-        //     throwingForce *= 2;
-        // }
         rb.AddForce(throwingDirection * throwingForce, ForceMode.Impulse);
     }
 
@@ -71,18 +67,21 @@ public class Boulder : MonoBehaviour
     {
         if(collision.gameObject.CompareTag("Player") && gameManager.PlayerActions.CurrentMode != GameManager.GameMode.Throwing)
         {
-            // Update the player's health with boulder's damage
+            // Squish the player and end the minigame
+            playerBehavior.UpdateAnimations("IsCrushed", true);
             EndMinigame(true);
         }
         if(collision.gameObject.CompareTag("Foe") && gameManager.PlayerActions.CurrentMode != GameManager.GameMode.Dodging)
         {
-            // Update the foe's health with boulder's damage
+            // Squish the foe and end the minigame
+            foeBehavior.UpdateAnimations("IsCrushed", true);
             EndMinigame(false);
            
         }
         if(collision.gameObject.CompareTag("Wall"))
         {
             Debug.Log("Boulder hit a wall and should return and strike");
+            audioManager.PlaySoundEffect(AudioManager.SoundEffect.Crash);
             ManageBoulderStrikes();
         }
     }
@@ -93,6 +92,7 @@ public class Boulder : MonoBehaviour
         if(other.gameObject.CompareTag("Ghost"))
         {
             Debug.Log("Boulder hit a ghost and should return and strike");
+            audioManager.PlaySoundEffect(AudioManager.SoundEffect.Spooky);
             ManageBoulderStrikes();
         }
     }
@@ -103,11 +103,13 @@ public class Boulder : MonoBehaviour
         if(gameManager.PlayerActions.CurrentMode == GameManager.GameMode.Throwing)
         {
             Debug.Log("Boulder returned to player");
+            playerBehavior.UpdateAnimations("IsHoldingBoulder", true);
             playerBehavior.IsPlayerBoulderHolder = true;
         }
         else if(gameManager.PlayerActions.CurrentMode == GameManager.GameMode.Dodging)
         {
             Debug.Log("Boulder returned to foe");
+            foeBehavior.UpdateAnimations("IsHoldingBoulder", true);
             foeBehavior.IsFoeBoulderHolder = true;
         }
 
@@ -125,6 +127,7 @@ public class Boulder : MonoBehaviour
 
     private void EndMinigame(bool damagePlayer)
     {
+        audioManager.PlaySoundEffect(AudioManager.SoundEffect.Crunch);
         gameManager.OnMiniGameEnd?.Invoke();
         gameManager.UpdateHealth(damagePlayer, boulderDamage);
         if(gameManager.IsGameOver != true)

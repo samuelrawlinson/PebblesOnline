@@ -202,6 +202,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 75857015}
+        m_TargetAssemblyTypeName: AudioManager, Assembly-CSharp
+        m_MethodName: PlayButtonPress
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 1982451075}
         m_TargetAssemblyTypeName: SceneController, Assembly-CSharp
         m_MethodName: LoadNewScene
@@ -432,10 +444,10 @@ AudioSource:
   m_GameObject: {fileID: 75857011}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 3924608467481818416, guid: a02abc110f2302047a8a64ac5ef50655, type: 2}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -529,10 +541,10 @@ AudioSource:
   m_GameObject: {fileID: 75857011}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 6727104388355496889, guid: a02abc110f2302047a8a64ac5ef50655, type: 2}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 0.5
   m_Pitch: 1
   Loop: 0
@@ -630,15 +642,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AudioManager
   MusicSource: {fileID: 75857014}
-  menuMusic: {fileID: 8300000, guid: d5d8023ada1c177498d0fafbb17f6bf3, type: 3}
-  gameMusic: {fileID: 0}
+  menuMusic: {fileID: 8300000, guid: 70714fc70811e4e4fb394b22ed291140, type: 3}
+  gameMusic: {fileID: 8300000, guid: d5d8023ada1c177498d0fafbb17f6bf3, type: 3}
   SFXSource: {fileID: 75857013}
-  buttonClick: {fileID: 0}
-  boulderThrow: {fileID: 0}
-  boulderCrunch: {fileID: 0}
-  wallCrash: {fileID: 0}
-  playerLost: {fileID: 0}
-  ghostDenial: {fileID: 0}
+  buttonClick: {fileID: 8300000, guid: 724b8aaa0e3234148b4e863b838d2bb7, type: 3}
+  boulderThrow: {fileID: 8300000, guid: 0a01a86ad75096a45a4593cf4ba478f0, type: 3}
+  boulderCrunch: {fileID: 8300000, guid: 2a6638060127a7446bc253c74d46fceb, type: 3}
+  wallCrash: {fileID: 8300000, guid: 5bef764f914da6f449960c1969773397, type: 3}
+  playerLost: {fileID: 8300000, guid: 87ab25053840c26449ffd467324744d2, type: 3}
+  ghostDenial: {fileID: 8300000, guid: d2a31172633f3c14698b054bdde9abf6, type: 3}
 --- !u!1 &94336904
 GameObject:
   m_ObjectHideFlags: 0
@@ -1278,6 +1290,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 75857015}
+        m_TargetAssemblyTypeName: AudioManager, Assembly-CSharp
+        m_MethodName: PlayButtonPress
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
       - m_Target: {fileID: 2093025699}
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
         m_MethodName: SetActive
@@ -1392,9 +1416,9 @@ MonoBehaviour:
   maxXBounds: 9
   minYBounds: 1
   maxYBounds: 8
-  minZBounds: -3
-  maxZBounds: 3
-  ghostBatchSize: 5
+  minZBounds: 0
+  maxZBounds: 4
+  ghostBatchSize: 4
   ghostBatchCookTime: 2
   gameManager: {fileID: 0}
   ghostPrefab: {fileID: 5247298619941674407, guid: e31c8b1759a78c644930c32b8d4b14cf, type: 3}
@@ -1481,6 +1505,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 75857015}
+        m_TargetAssemblyTypeName: AudioManager, Assembly-CSharp
+        m_MethodName: PlayButtonPress
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
       - m_Target: {fileID: 1137337926}
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
         m_MethodName: SetActive
@@ -3374,6 +3410,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 75857015}
+        m_TargetAssemblyTypeName: AudioManager, Assembly-CSharp
+        m_MethodName: PlayButtonPress
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
       - m_Target: {fileID: 1671726327}
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
         m_MethodName: SetActive
@@ -3401,18 +3449,6 @@ MonoBehaviour:
       - m_Target: {fileID: 1228587833}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
         m_MethodName: Pause
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
-      - m_Target: {fileID: 1228587833}
-        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: PlaySoundEffect
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3682,6 +3718,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 75857015}
+        m_TargetAssemblyTypeName: AudioManager, Assembly-CSharp
+        m_MethodName: PlayButtonPress
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 1137337926}
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
         m_MethodName: SetActive
@@ -3807,6 +3855,10 @@ PrefabInstance:
     - target: {fileID: 7324254824733267071, guid: 74aad3ae2575553418e62509b1a3d171, type: 3}
       propertyPath: m_Constraints
       value: 126
+      objectReference: {fileID: 0}
+    - target: {fileID: 7324254824733267071, guid: 74aad3ae2575553418e62509b1a3d171, type: 3}
+      propertyPath: m_IsKinematic
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8128338025913727274, guid: 74aad3ae2575553418e62509b1a3d171, type: 3}
       propertyPath: m_Name
@@ -4358,6 +4410,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 75857015}
+        m_TargetAssemblyTypeName: AudioManager, Assembly-CSharp
+        m_MethodName: PlayButtonPress
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 1982451075}
         m_TargetAssemblyTypeName: SceneController, Assembly-CSharp
         m_MethodName: LoadNewScene
@@ -4456,6 +4520,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   OnMiniGameEnd:
+    m_PersistentCalls:
+      m_Calls: []
+  OnGameOver:
     m_PersistentCalls:
       m_Calls: []
   boulderPrefab: {fileID: 3170047630518236227, guid: c50682390aed4df489d7df9d14af25b1, type: 3}
@@ -6030,6 +6097,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 75857015}
+        m_TargetAssemblyTypeName: AudioManager, Assembly-CSharp
+        m_MethodName: PlayButtonPress
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 1982451075}
         m_TargetAssemblyTypeName: SceneController, Assembly-CSharp
         m_MethodName: LoadNewScene
@@ -7375,6 +7454,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 75857015}
+        m_TargetAssemblyTypeName: AudioManager, Assembly-CSharp
+        m_MethodName: PlayButtonPress
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
       - m_Target: {fileID: 1148550021}
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
         m_MethodName: SetActive
@@ -7520,6 +7611,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 75857015}
+        m_TargetAssemblyTypeName: AudioManager, Assembly-CSharp
+        m_MethodName: PlayButtonPress
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
       - m_Target: {fileID: 2093025699}
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
         m_MethodName: SetActive

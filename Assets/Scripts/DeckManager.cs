@@ -19,9 +19,6 @@ public class DeckManager : MonoBehaviour
     private List<Card> deck = new List<Card>();
     private List<Card> cards = new List<Card>();
 
-    
-    
-
 
     public enum CardType
     {
@@ -83,6 +80,14 @@ public class DeckManager : MonoBehaviour
 
         CreateDeck();
         DealCards();
+
+        // Add Subscribers
+        gameManager.OnGameOver.AddListener(EndCoroutines);
+    }
+
+    void OnDisable()
+    {
+        gameManager.OnGameOver.RemoveListener(EndCoroutines);
     }
 
 
@@ -212,9 +217,6 @@ public class DeckManager : MonoBehaviour
             // Start the boulder throw minigame
             gameManager.ManageGameModes(GameManager.GameMode.Throwing, GameManager.GameMode.Dodging);
             gameManager.OnMiniGameStart?.Invoke();
-
-            // Update the foe's health with boulder's damage
-            // gameManager.UpdateHealth(false, Cards[(int)CardType.Boulder].damage);
         }
 
         // Foe played a Boulder
@@ -224,9 +226,6 @@ public class DeckManager : MonoBehaviour
             // Start the boulder throw minigame
             gameManager.ManageGameModes(GameManager.GameMode.Dodging, GameManager.GameMode.Throwing);
             gameManager.OnMiniGameStart?.Invoke();
-
-            // Update the foe's health with boulder's damage
-            // gameManager.UpdateHealth(false, Cards[(int)CardType.Boulder].damage);
         }
 
 
@@ -330,6 +329,12 @@ public class DeckManager : MonoBehaviour
         // Determine if there's a winner
         gameManager.ManageWins();
     }   
+
+
+    private void EndCoroutines()
+    {
+        StopAllCoroutines();
+    }
 
 
     

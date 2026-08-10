@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class AudioManager : MonoBehaviour
 {
@@ -10,6 +9,15 @@ public class AudioManager : MonoBehaviour
     public static float MusicVolume { get; private set;}
     [SerializeField] private AudioClip menuMusic;
     [SerializeField] private AudioClip gameMusic;
+
+    public enum SoundEffect
+    {
+        Swoosh,
+        Crunch,
+        Crash,
+        WompWomp,
+        Spooky
+    }
 
     [Header("SFX")]
     public AudioSource SFXSource;
@@ -37,9 +45,10 @@ public class AudioManager : MonoBehaviour
 
     void Start()
     {
+        AudioSource[] sources = GetComponents<AudioSource>();
+        MusicSource = sources[0];
+        SFXSource = sources[1];
         UpdateMusic(false);
-
-        buttonClick = Resources.Load<AudioClip>("SFX_UIClick");
 
         // Preserve volume levels
         MusicSource.volume = MusicVolume;
@@ -67,6 +76,30 @@ public class AudioManager : MonoBehaviour
             MusicSource.Play();
         }
     }
+
+
+    public void PlaySoundEffect(SoundEffect soundEffect)
+    {
+        switch (soundEffect)
+        {
+            case SoundEffect.Swoosh:
+                SFXSource.PlayOneShot(boulderThrow);
+                break;
+            case SoundEffect.Crunch:
+                SFXSource.PlayOneShot(boulderCrunch);
+                break;
+            case SoundEffect.Crash:
+                SFXSource.PlayOneShot(wallCrash);
+                break;
+            case SoundEffect.WompWomp:
+                SFXSource.PlayOneShot(playerLost);
+                break;
+            case SoundEffect.Spooky:
+                SFXSource.PlayOneShot(ghostDenial);
+                break;
+        }
+    }
+
 
     public void PlayButtonPress()
     {

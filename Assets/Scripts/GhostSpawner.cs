@@ -1,7 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
-using Unity.VisualScripting.FullSerializer;
 using UnityEngine;
 
 public class GhostSpawner : MonoBehaviour
@@ -20,13 +18,13 @@ public class GhostSpawner : MonoBehaviour
     [SerializeField] private float maxXBounds = 9;
     [SerializeField] private float minYBounds = 1;
     [SerializeField] private float maxYBounds = 8;
-    [SerializeField] private float minZBounds = -3;
-    [SerializeField] private float maxZBounds = 3;
+    [SerializeField] private float minZBounds = 0;
+    [SerializeField] private float maxZBounds = 4;
     
 
     [Header("Ghosts")]
     private List<GameObject> ghosts = new List<GameObject>();
-    [SerializeField] private int ghostBatchSize = 5;
+    [SerializeField] private int ghostBatchSize = 4;
     [SerializeField] private float ghostBatchCookTime = 2f;
 
 
@@ -38,14 +36,18 @@ public class GhostSpawner : MonoBehaviour
     void Start()
     {
         gameManager = GameManager.Instance;
+
+        // Add subcribers
         gameManager.OnMiniGameStart.AddListener(StartSpawningGhosts);
         gameManager.OnMiniGameEnd.AddListener(DeleteAllGhosts);
+        gameManager.OnGameOver.AddListener(EndCoroutines);
     }
 
     void OnDisable()
     {
         gameManager.OnMiniGameStart.RemoveListener(StartSpawningGhosts);
         gameManager.OnMiniGameEnd.RemoveListener(DeleteAllGhosts);
+        gameManager.OnGameOver.RemoveListener(EndCoroutines);
     }
 
     // Update is called once per frame
@@ -91,6 +93,11 @@ public class GhostSpawner : MonoBehaviour
 
             StartCoroutine("SpawnGhosts");
         }
+    }
+
+    private void EndCoroutines()
+    {
+        StopAllCoroutines();
     }
 }
 

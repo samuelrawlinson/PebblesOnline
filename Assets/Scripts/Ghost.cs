@@ -1,9 +1,8 @@
-using UnityEditor.Callbacks;
 using UnityEngine;
 
 public class Ghost : MonoBehaviour
 {
-    [SerializeField] private float decendSpeed = 3f;
+    [SerializeField] private float decendSpeed = 4;
     [SerializeField] private float decendLimit = -1;
 
     // Update is called once per frame

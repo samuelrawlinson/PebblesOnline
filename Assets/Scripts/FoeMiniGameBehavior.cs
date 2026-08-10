@@ -34,6 +34,7 @@ public class FoeMiniGameBehavior : MonoBehaviour
 
         gameManager.OnMiniGameStart.AddListener(SetGameMode);
         gameManager.OnMiniGameEnd.AddListener(ReturnToPlayState);
+        gameManager.OnGameOver.AddListener(EndCoroutines);
         agent.speed = agentSpeed;
     }
 
@@ -41,11 +42,13 @@ public class FoeMiniGameBehavior : MonoBehaviour
     {
         gameManager.OnMiniGameStart.RemoveListener(SetGameMode);
         gameManager.OnMiniGameEnd.RemoveListener(ReturnToPlayState);
+        gameManager.OnGameOver.RemoveListener(EndCoroutines);
     }
 
     private void ReturnToPlayState()
     {
         foe.CurrentMode = GameManager.GameMode.Playing;
+        foe.Animator.SetBool("IsWalking", false);
         IsFoeBoulderHolder = false;
         SetGameMode();
     }
@@ -55,6 +58,7 @@ public class FoeMiniGameBehavior : MonoBehaviour
     {
         if(foe.CurrentMode == GameManager.GameMode.Dodging)
         {
+            // foe.Animator.SetBool("IsWalking", true);
             StartCoroutine("PickRandomDestination");
             Debug.Log("Foe in dodging position");
         }
@@ -65,8 +69,9 @@ public class FoeMiniGameBehavior : MonoBehaviour
             StartCoroutine("ThrowBoulder");
             Debug.Log("Foe in throwing position");
         }
-        else if(foe.CurrentMode == GameManager.GameMode.Playing && gameManager.IsGameOver != true)
+        else if(foe.CurrentMode == GameManager.GameMode.Playing && gameManager.IsGameOver != true && foe.Animator.GetBool("IsCrushed") == false)
         {
+            // Un-squish foe model if squished, and return to the table
             agent.SetDestination(playingPosition);
             foe.StartCoroutine("ChooseCard");
             Debug.Log("Foe in playing position");
@@ -79,9 +84,11 @@ public class FoeMiniGameBehavior : MonoBehaviour
 
         if(foe.CurrentMode == GameManager.GameMode.Dodging)
         {
+            
             float randomXValue = Random.Range(minXValue, maxXValue);
             randomDestination.x = randomXValue;
             agent.SetDestination(randomDestination);
+            Debug.Log("Should be moving to: " + randomDestination);
 
             StartCoroutine("PickRandomDestination");
         }
@@ -117,7 +124,7 @@ public class FoeMiniGameBehavior : MonoBehaviour
             boulder.BeThrownByHolder(target.position);
             Debug.Log("Strikes: " + boulder.Strikes);
             // TODO make it the length of the throw animation
-            yield return new WaitForSeconds(decisionTime + decisionTime);
+            yield return new WaitForSeconds(decisionTime);
 
             foe.Animator.SetBool("IsHoldingBoulder", true);
             StartCoroutine("ThrowBoulder");
@@ -127,6 +134,17 @@ public class FoeMiniGameBehavior : MonoBehaviour
             IsFoeBoulderHolder = false;
             foe.Animator.SetBool("IsHoldingBoulder", false);
         }
+    }
+
+
+    public void UpdateAnimations(string boolName, bool active)
+    {
+        foe.Animator.SetBool(boolName, active);
+    }
+
+    private void EndCoroutines()
+    {
+        StopAllCoroutines();
     }
 
 

@@ -1,6 +1,4 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
-using UnityEngine.UIElements;
 
 public class PlayerMiniGameBehavior : MonoBehaviour
 {
@@ -34,17 +32,24 @@ public class PlayerMiniGameBehavior : MonoBehaviour
         // Add subscribers
         gameManager.OnMiniGameStart.AddListener(SetGameMode);
         gameManager.OnMiniGameEnd.AddListener(ReturnToPlayState);
+        gameManager.OnGameOver.AddListener(EndCoroutines);
     }
 
     void OnDisable()
     {
         gameManager.OnMiniGameStart.RemoveListener(SetGameMode);
         gameManager.OnMiniGameEnd.RemoveListener(ReturnToPlayState);
+        gameManager.OnGameOver.RemoveListener(EndCoroutines);
     }
 
     void Update()
     {
-        if(Input.GetButtonDown("ShootBoulder") && player.CurrentMode == GameManager.GameMode.Throwing)
+        // If the game isn't over, the player is supposed to be holding the boulder, 
+        // and the player actually is holding the boulder, then it can be thrown
+        if(Input.GetButtonDown("ShootBoulder") && 
+            gameManager.IsGameOver != true &&
+            player.CurrentMode == GameManager.GameMode.Throwing && 
+            IsPlayerBoulderHolder == true)
         {
             ThrowBoulder();
         }
@@ -71,8 +76,10 @@ public class PlayerMiniGameBehavior : MonoBehaviour
             transform.position = dodgingPosition;
             Debug.Log("Player in dodging position");
         }
-        else if(player.CurrentMode == GameManager.GameMode.Playing && transform.position != playingPosition && gameManager.IsGameOver != true)
+        else if(player.CurrentMode == GameManager.GameMode.Playing && gameManager.IsGameOver != true)
         {
+            // Un-squish player model if squished
+            UpdateAnimations("IsCrushed", false);
             transform.position = playingPosition;
             Debug.Log("Player in playing position");
         }
@@ -106,5 +113,15 @@ public class PlayerMiniGameBehavior : MonoBehaviour
         animator.SetBool("IsHoldingBoulder", false);
         Vector3 throwDirection = Camera.main.transform.forward;
         boulder.BeThrownByHolder(throwDirection);
+    }
+
+    public void UpdateAnimations(string boolName, bool active)
+    {
+        animator.SetBool(boolName, active);
+    }
+
+    private void EndCoroutines()
+    {
+        StopAllCoroutines();
     }
 }

@@ -520,7 +520,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c1af92804148704db6efff42e1c4c35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Rotate
-  decendSpeed: 3
+  decendSpeed: 4
   decendLimit: -1
 --- !u!1 &6635990462416407001
 GameObject:

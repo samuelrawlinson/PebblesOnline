@@ -1,5 +1,3 @@
-using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -15,6 +13,7 @@ public class GameManager : MonoBehaviour
     public bool IsGameOver { get; private set;} = false;
     public UnityEvent OnMiniGameStart = new UnityEvent();
     public UnityEvent OnMiniGameEnd = new UnityEvent();
+    public UnityEvent OnGameOver = new UnityEvent();
     public GameObject boulderPrefab;
 
     [Header("Managers")]
@@ -79,6 +78,8 @@ public class GameManager : MonoBehaviour
         {
             foeActions = FindAnyObjectByType<FoeActions>();
         }
+
+        audioManager.UpdateMusic(true);
     }
 
     public void ManageGameModes(GameMode player, GameMode foe)
@@ -87,7 +88,6 @@ public class GameManager : MonoBehaviour
         foeActions.CurrentMode = foe;
         Debug.Log(player);
         Debug.Log(foe);
-
     }
 
     public void UpdateHealth(bool isPlayer, int amount)
@@ -104,8 +104,9 @@ public class GameManager : MonoBehaviour
 
     private void UpdateRound()
     {
-        // Update overlay text
+        // Update player's overlay text
         hudManager.UpdateRoundStats(PlayerWins, FoeWins, Round);
+        OnGameOver?.Invoke();
         Round++;
         IsGameOver = true;
     }
@@ -130,6 +131,7 @@ public class GameManager : MonoBehaviour
         else if(playerHealth.CurrentHealth <= 0)
         {
             Debug.Log("You lose round " + Round);
+            audioManager.PlaySoundEffect(AudioManager.SoundEffect.WompWomp);
             FoeWins++;
             UpdateRound();
             hudManager.YouLose.SetActive(true);
@@ -159,10 +161,5 @@ public class GameManager : MonoBehaviour
     {
         IsPaused = false;
         Time.timeScale = 1;
-    }
-
-    public void PlaySoundEffect()
-    {
-        audioManager.PlayButtonPress();
     }
 }
