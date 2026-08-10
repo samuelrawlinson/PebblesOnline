@@ -43,6 +43,9 @@ public class CameraController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Move the camera back so you can see where you're aiming better
+    /// </summary>
     private void UpdateCameraOffsetForThrowing()
     {
         if(GameManager.Instance.PlayerActions.CurrentMode == GameManager.GameMode.Throwing)
@@ -52,6 +55,9 @@ public class CameraController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Return the camera to the normal offset
+    /// </summary>
     private void UpdateCameraOffsetForPlaying()
     {
         offsetYValue = offsetModifier;

@@ -190,6 +190,9 @@ public class DeckManager : MonoBehaviour
     }
 
 
+    /// <summary>
+    /// Damage both players because they both play one card every turn
+    /// </summary>
     public void RoundlyDamage()
     {
         Debug.Log("Damage from playing one card");
@@ -234,8 +237,6 @@ public class DeckManager : MonoBehaviour
         {
             RoundlyDamage();
         }
-
-
 
 
         // If it's a Hill, replace the card with a new one
@@ -331,6 +332,9 @@ public class DeckManager : MonoBehaviour
     }   
 
 
+    /// <summary>
+    /// End any running coroutines
+    /// </summary>
     private void EndCoroutines()
     {
         StopAllCoroutines();

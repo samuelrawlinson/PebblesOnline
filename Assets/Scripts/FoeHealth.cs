@@ -11,6 +11,10 @@ public class FoeHealth : MonoBehaviour
         CurrentHealth = maxHealth;
     }
 
+    /// <summary>
+    /// Update the foe's health to reflect their card amount
+    /// </summary>
+    /// <param name="amount"></param>
     public void UpdateHealth(int amount)
     {
         if(CurrentHealth < maxHealth || amount < 0)

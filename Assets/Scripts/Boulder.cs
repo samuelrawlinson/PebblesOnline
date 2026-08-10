@@ -98,6 +98,9 @@ public class Boulder : MonoBehaviour
     }
 
 
+    /// <summary>
+    /// In the case that the boulder misses, add a strike and return it to the boulder holder
+    /// </summary>
     private void ManageBoulderStrikes()
     {
         if(gameManager.PlayerActions.CurrentMode == GameManager.GameMode.Throwing)
@@ -125,6 +128,10 @@ public class Boulder : MonoBehaviour
     }
 
 
+    /// <summary>
+    /// End the boulder throwing minigame and trigger its consequences
+    /// </summary>
+    /// <param name="damagePlayer"></param>
     private void EndMinigame(bool damagePlayer)
     {
         audioManager.PlaySoundEffect(AudioManager.SoundEffect.Crunch);

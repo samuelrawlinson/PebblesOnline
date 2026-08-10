@@ -77,7 +77,10 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-
+    /// <summary>
+    /// Play a sound effec that matches the provided SoundEffect enum
+    /// </summary>
+    /// <param name="soundEffect"></param>
     public void PlaySoundEffect(SoundEffect soundEffect)
     {
         switch (soundEffect)
@@ -101,6 +104,9 @@ public class AudioManager : MonoBehaviour
     }
 
 
+    /// <summary>
+    /// Quick reference for UI buttons to call related sound
+    /// </summary>
     public void PlayButtonPress()
     {
         SFXSource.PlayOneShot(buttonClick);

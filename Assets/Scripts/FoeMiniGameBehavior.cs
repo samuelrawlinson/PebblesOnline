@@ -45,6 +45,9 @@ public class FoeMiniGameBehavior : MonoBehaviour
         gameManager.OnGameOver.RemoveListener(EndCoroutines);
     }
 
+    /// <summary>
+    /// OnMiniGameEnd, set GameMode back to Playing and carry on with normal gameplay
+    /// </summary>
     private void ReturnToPlayState()
     {
         foe.CurrentMode = GameManager.GameMode.Playing;
@@ -54,6 +57,9 @@ public class FoeMiniGameBehavior : MonoBehaviour
     }
 
 
+    /// <summary>
+    /// Manage consequences of each possible GameMode
+    /// </summary>
     private void SetGameMode()
     {
         if(foe.CurrentMode == GameManager.GameMode.Dodging)
@@ -78,6 +84,10 @@ public class FoeMiniGameBehavior : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Find a random position to walk to to avoid boulder fire
+    /// </summary>
+    /// <returns></returns>
     public IEnumerator PickRandomDestination()
     {
         yield return new WaitForSeconds(decisionTime / decisionTime);
@@ -137,11 +147,19 @@ public class FoeMiniGameBehavior : MonoBehaviour
     }
 
 
+    /// <summary>
+    /// Update an animation bool with a provided value
+    /// </summary>
+    /// <param name="boolName"></param>
+    /// <param name="active"></param>
     public void UpdateAnimations(string boolName, bool active)
     {
         foe.Animator.SetBool(boolName, active);
     }
 
+    /// <summary>
+    /// End all running coroutines
+    /// </summary>
     private void EndCoroutines()
     {
         StopAllCoroutines();

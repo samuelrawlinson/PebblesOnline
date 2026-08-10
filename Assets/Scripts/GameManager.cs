@@ -82,6 +82,11 @@ public class GameManager : MonoBehaviour
         audioManager.UpdateMusic(true);
     }
 
+    /// <summary>
+    /// Update player and foe GameModes with input
+    /// </summary>
+    /// <param name="player"></param>
+    /// <param name="foe"></param>
     public void ManageGameModes(GameMode player, GameMode foe)
     {
         PlayerActions.CurrentMode = player;
@@ -90,6 +95,11 @@ public class GameManager : MonoBehaviour
         Debug.Log(foe);
     }
 
+    /// <summary>
+    /// Update player or foe health with provided amount
+    /// </summary>
+    /// <param name="isPlayer"></param>
+    /// <param name="amount"></param>
     public void UpdateHealth(bool isPlayer, int amount)
     {
         if(isPlayer)
@@ -102,6 +112,9 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Update win texts, and wrap up this round
+    /// </summary>
     private void UpdateRound()
     {
         // Update player's overlay text
@@ -110,6 +123,9 @@ public class GameManager : MonoBehaviour
         IsGameOver = true;
     }
 
+    /// <summary>
+    /// Find out who wins the round, and potentially who wins the game overall
+    /// </summary>
     public void ManageWins()
     {
         if(playerHealth.CurrentHealth <= 0 && foeHealth.CurrentHealth <= 0)
@@ -158,6 +174,9 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Regardless of outcome, game's over and scores must needs be rest
+    /// </summary>
     private void ManagePebblerOutcomes()
     {
         IsGameOver = true;
