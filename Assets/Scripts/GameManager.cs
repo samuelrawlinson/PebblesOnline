@@ -4,9 +4,8 @@ using UnityEngine.Events;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance {get; private set;}
-    public static int PlayerWins = 0;
-    public static int FoeWins = 0;
-    public static int Round = 1;
+    public static int PlayerWins;
+    public static int FoeWins;
 
     [Header("Publics")]
     public bool IsPaused { get; private set; } = false;
@@ -79,6 +78,7 @@ public class GameManager : MonoBehaviour
             foeActions = FindAnyObjectByType<FoeActions>();
         }
 
+        hudManager.UpdateRoundStats(PlayerWins, FoeWins);
         audioManager.UpdateMusic(true);
     }
 
@@ -105,9 +105,8 @@ public class GameManager : MonoBehaviour
     private void UpdateRound()
     {
         // Update player's overlay text
-        hudManager.UpdateRoundStats(PlayerWins, FoeWins, Round);
+        hudManager.UpdateRoundStats(PlayerWins, FoeWins);
         OnGameOver?.Invoke();
-        Round++;
         IsGameOver = true;
     }
 
@@ -115,7 +114,7 @@ public class GameManager : MonoBehaviour
     {
         if(playerHealth.CurrentHealth <= 0 && foeHealth.CurrentHealth <= 0)
         {
-            Debug.Log("You tied round " + Round);
+            Debug.Log("You tied this round");
             FoeWins++;
             PlayerWins++;
             UpdateRound();
@@ -123,14 +122,14 @@ public class GameManager : MonoBehaviour
         }
         else if(foeHealth.CurrentHealth <= 0)
         {
-            Debug.Log("You win round " + Round + "!");
+            Debug.Log("You win this round!");
             PlayerWins++;
             UpdateRound();
             hudManager.YouWin.SetActive(true);
         }
         else if(playerHealth.CurrentHealth <= 0)
         {
-            Debug.Log("You lose round " + Round);
+            Debug.Log("You lose this round");
             audioManager.PlaySoundEffect(AudioManager.SoundEffect.WompWomp);
             FoeWins++;
             UpdateRound();
@@ -139,16 +138,31 @@ public class GameManager : MonoBehaviour
 
 
         // Declare Pebbler
-        if(PlayerWins >= winsNeededToBecomePebbler)
+        if(PlayerWins >= winsNeededToBecomePebbler && FoeWins >= winsNeededToBecomePebbler)
         {
-            IsGameOver = true;
+            ManagePebblerOutcomes();
+            hudManager.BothBecomePebbler.SetActive(true);
+            Debug.Log("Both players are the new Pebbler!");
+        }
+        else if(PlayerWins >= winsNeededToBecomePebbler)
+        {
+            ManagePebblerOutcomes();
+            hudManager.YouBecomePebbler.SetActive(true);
             Debug.Log("Player is the new Pebbler!");
         }
         else if(FoeWins >= winsNeededToBecomePebbler)
         {
-            IsGameOver = true;
+            ManagePebblerOutcomes();
+            hudManager.FoeBecomesPebbler.SetActive(true);
             Debug.Log("Foe is the new Pebbler!");
         }
+    }
+
+    private void ManagePebblerOutcomes()
+    {
+        IsGameOver = true;
+        PlayerWins = 0;
+        FoeWins = 0;
     }
 
     public void Pause()

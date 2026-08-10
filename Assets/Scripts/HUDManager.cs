@@ -11,6 +11,9 @@ public class HUDManager : MonoBehaviour
     public GameObject YouWin;
     public GameObject YouLose;
     public GameObject YouTied;
+    public GameObject YouBecomePebbler;
+    public GameObject FoeBecomesPebbler;
+    public GameObject BothBecomePebbler;
 
     [Header("Sound")]
     [SerializeField] private Slider musicSlider;
@@ -31,12 +34,10 @@ public class HUDManager : MonoBehaviour
     }
 
 
-    public void UpdateRoundStats(int playerWins, int foeWins, int numberOfRounds)
+    public void UpdateRoundStats(int playerWins, int foeWins)
     {
         roundsWon.text = "Player Wins: " + playerWins + " / 3 \n" 
                         + "Foe Wins: " + foeWins + " / 3";
-
-        rounds.text = "Round: " + numberOfRounds;
     }
 
 }

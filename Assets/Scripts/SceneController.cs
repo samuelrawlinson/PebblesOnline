@@ -3,16 +3,16 @@ using UnityEngine.SceneManagement;
 
 public class SceneController : MonoBehaviour
 {
-    public static SceneController Instance;
+    // public static SceneController Instance;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        if(Instance != this && Instance != null)
-        {
-            Destroy(gameObject);
-            return;
-        }
-        Instance = this;
+        // if(Instance != this && Instance != null)
+        // {
+        //     Destroy(gameObject);
+        //     return;
+        // }
+        // Instance = this;
         DontDestroyOnLoad(gameObject);
     }
 
